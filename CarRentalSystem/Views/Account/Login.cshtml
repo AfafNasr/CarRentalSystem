@@ -1,0 +1,231 @@
+﻿@model CarRentalSystem.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Sign In";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Sign In - DriveEase</title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/login.css"
+          asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <section class="hero-section">
+            <div class="hero-overlay"></div>
+
+            <div class="brand">
+                <div class="brand-icon">🚘</div>
+
+                <div>
+                    <h2>Drive<span>Ease</span></h2>
+                    <p>PREMIUM CAR RENTAL</p>
+                </div>
+            </div>
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    WELCOME BACK
+                </span>
+
+                <h1>
+                    Your Next Journey<br />
+                    <span>Starts Here.</span>
+                </h1>
+
+                <p>
+                    Sign in to explore available cars,
+                    manage your reservations and continue
+                    your journey with DriveEase.
+                </p>
+
+                <div class="hero-features">
+
+                    <div class="feature">
+                        <span>✓</span>
+
+                        <div>
+                            <strong>Quick Booking</strong>
+                            <p>Reserve your perfect car in minutes.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <span>✓</span>
+
+                        <div>
+                            <strong>Secure Experience</strong>
+                            <p>Your account and information are protected.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <span>✓</span>
+
+                        <div>
+                            <strong>Premium Selection</strong>
+                            <p>Find the right vehicle for every journey.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="form-section">
+
+            <div class="login-card">
+
+                <div class="form-header">
+                    <div class="form-icon">🚘</div>
+
+                    <h2>Welcome Back</h2>
+
+                    <p>
+                        Sign in to continue to your account
+                    </p>
+                </div>
+
+
+                <form asp-controller="Account"
+                      asp-action="Login"
+                      method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="validation-summary">
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label asp-for="Email"></label>
+
+                        <input asp-for="Email"
+                               class="custom-input"
+                               placeholder="Enter your email" />
+
+                        <span asp-validation-for="Email"
+                              class="validation-message"></span>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label asp-for="Password"></label>
+
+                        <div class="password-wrapper">
+
+                            <input asp-for="Password"
+                                   class="custom-input"
+                                   id="passwordInput"
+                                   placeholder="Enter your password" />
+
+                            <button type="button"
+                                    id="togglePassword"
+                                    class="password-toggle">
+                                Show
+                            </button>
+
+                        </div>
+
+                        <span asp-validation-for="Password"
+                              class="validation-message"></span>
+
+                    </div>
+
+
+                    <div class="login-options">
+
+                        <label class="remember-me">
+
+                            <input asp-for="RememberMe" />
+
+                            <span>
+                                Remember me
+                            </span>
+
+                        </label>
+
+                        <span class="forgot-password">
+                            Forgot password?
+                        </span>
+
+                    </div>
+
+
+                    <button type="submit"
+                            class="login-button">
+
+                        Sign In
+
+                        <span>→</span>
+
+                    </button>
+
+
+                    <div class="register-link">
+
+                        Don't have an account?
+
+                        <a asp-controller="Account"
+                           asp-action="Register">
+                            Create account
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+            const passwordInput =
+                document.getElementById("passwordInput");
+
+            const togglePassword =
+                document.getElementById("togglePassword");
+
+            togglePassword.addEventListener("click", function() {
+
+                const hidden =
+                    passwordInput.type === "password";
+
+                passwordInput.type =
+                    hidden ? "text" : "password";
+
+                togglePassword.textContent =
+                    hidden ? "Hide" : "Show";
+            });
+    </script>
+
+</body>
+</html>
