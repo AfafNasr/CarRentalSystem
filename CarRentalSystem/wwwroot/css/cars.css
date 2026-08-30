@@ -641,3 +641,160 @@ body {
         margin-top: 15px;
     }
 }
+
+.availability {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 7px 11px;
+    border-radius: 20px;
+    backdrop-filter: blur(7px);
+    font-size: 10px;
+    font-weight: 600;
+}
+
+    .availability.available {
+        color: #d8ffe5;
+        background: rgba(30, 130, 70, 0.82);
+    }
+
+    .availability.reserved {
+        color: #ffe2e2;
+        background: rgba(160, 45, 45, 0.84);
+    }
+
+.availability-info {
+    margin-top: 13px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fff6e8;
+    color: #8a682e;
+    font-size: 10px;
+}
+
+    .availability-info strong {
+        margin-left: 3px;
+        color: #72521e;
+    }
+
+/* =========================================
+   RESERVATION SCHEDULE
+========================================= */
+
+.booking-schedule {
+    margin-top: 15px;
+    padding: 13px;
+    border: 1px solid #eee1ca;
+    border-radius: 10px;
+    background: #fffaf2;
+}
+
+
+.schedule-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    color: #825f26;
+    font-size: 10px;
+}
+
+
+    .schedule-header strong {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+
+.reserved-periods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+
+.reserved-period {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 9px;
+    border: 1px solid #eadbc2;
+    border-radius: 7px;
+    background: white;
+    color: #69512c;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+
+.date-arrow {
+    color: #c58d34;
+}
+
+
+/* NO RESERVATIONS */
+
+.fully-available {
+    margin-top: 15px;
+    padding: 10px 12px;
+    border-radius: 9px;
+    background: #eff9f2;
+    color: #338356;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* CURRENT RESERVATION */
+
+.current-reservation-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 9px;
+    background: #fff0f0;
+    border: 1px solid #f3dada;
+    color: #9a4444;
+}
+
+
+    .current-reservation-info span {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+
+    .current-reservation-info strong {
+        font-size: 10px;
+    }
+
+
+/* AVAILABILITY BADGES */
+
+.availability {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 3;
+    padding: 7px 12px;
+    border-radius: 20px;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    backdrop-filter: blur(6px);
+}
+
+
+    .availability.available {
+        background: rgba(39, 151, 87, 0.90);
+    }
+
+
+    .availability.reserved {
+        background: rgba(190, 64, 64, 0.90);
+    }

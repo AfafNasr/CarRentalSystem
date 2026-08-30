@@ -1,0 +1,252 @@
+﻿@model IEnumerable<CarRentalSystem.Models.Reservation>
+
+@{
+    ViewData["Title"] = "My Reservations";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>My Reservations - DriveEase</title>
+
+    <link rel="stylesheet"
+          href="~/css/my-reservations.css"
+          asp-append-version="true" />
+
+</head>
+
+
+<body>
+
+
+    <header class="main-header">
+
+        <a asp-controller="Cars"
+           asp-action="Index"
+           class="brand">
+
+            <span class="brand-icon">
+                🚘
+            </span>
+
+            <div>
+                <h2>
+                    Drive<span>Ease</span>
+                </h2>
+
+                <small>
+                    PREMIUM CAR RENTAL
+                </small>
+            </div>
+
+        </a>
+
+
+        <nav>
+
+            <a asp-controller="Cars"
+               asp-action="Index">
+                Cars
+            </a>
+
+            <a asp-controller="Reservations"
+               asp-action="MyReservations"
+               class="active">
+                My Reservations
+            </a>
+
+            <a href="#">
+                Profile
+            </a>
+
+        </nav>
+
+
+        <div class="user-menu">
+
+            <strong>
+                @User.Identity?.Name
+            </strong>
+
+            <form asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                <button type="submit">
+                    Logout
+                </button>
+
+            </form>
+
+        </div>
+
+    </header>
+
+
+    <main class="page-container">
+
+        <div class="page-heading">
+
+            <span>
+                YOUR JOURNEYS
+            </span>
+
+            <h1>
+                My Reservations
+            </h1>
+
+            <p>
+                View and manage your car rental bookings.
+            </p>
+
+        </div>
+
+
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+
+                <div>
+                    🚗
+                </div>
+
+                <h2>
+                    No reservations yet
+                </h2>
+
+                <p>
+                    Start exploring our fleet and book
+                    your first journey.
+                </p>
+
+                <a asp-controller="Cars"
+                   asp-action="Index">
+                    Browse Cars
+                </a>
+
+            </div>
+        }
+
+        else
+        {
+            <div class="reservation-list">
+
+                @foreach (var reservation in Model)
+                {
+                    <article class="reservation-card">
+
+                        <div class="car-image">
+
+                            <img src="@reservation.Car.ImageUrl"
+                                 alt="@reservation.Car.Brand @reservation.Car.Model" />
+
+                        </div>
+
+
+                        <div class="reservation-info">
+
+                            <div class="reservation-heading">
+
+                                <div>
+
+                                    <span class="car-brand">
+                                        @reservation.Car.Brand
+                                    </span>
+
+                                    <h2>
+                                        @reservation.Car.Model
+                                    </h2>
+
+                                </div>
+
+
+                                <span class="status
+                                    @reservation.Status.ToString().ToLower()">
+
+                                    @reservation.Status
+
+                                </span>
+
+                            </div>
+
+
+                            <p class="location">
+                                📍 @reservation.Car.Location
+                            </p>
+
+
+                            <div class="reservation-details">
+
+                                <div>
+
+                                    <span>
+                                        Pickup
+                                    </span>
+
+                                    <strong>
+                                        @reservation.PickupDate.ToString("dd MMM yyyy")
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        Return
+                                    </span>
+
+                                    <strong>
+                                        @reservation.ReturnDate.ToString("dd MMM yyyy")
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        Reservation
+                                    </span>
+
+                                    <strong>
+                                        #@reservation.Id
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        Total
+                                    </span>
+
+                                    <strong class="price">
+                                        $@reservation.TotalPrice.ToString("0.00")
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+                }
+
+            </div>
+        }
+
+    </main>
+
+</body>
+</html>

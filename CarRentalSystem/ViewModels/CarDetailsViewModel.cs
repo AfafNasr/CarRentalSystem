@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarRentalSystem.ViewModels
 {
-    public class CarSearchViewModel
+    public class CarDetailsViewModel
     {
-        public string? Location { get; set; }
+        public Car Car { get; set; } = null!;
 
         [DataType(DataType.Date)]
         [Display(Name = "Pickup Date")]
@@ -14,12 +14,5 @@ namespace CarRentalSystem.ViewModels
         [DataType(DataType.Date)]
         [Display(Name = "Return Date")]
         public DateTime? ReturnDate { get; set; }
-
-        [Display(Name = "Car Type")]
-        public CarType? Type { get; set; }
-
-        public TransmissionType? Transmission { get; set; }
-
-        public List<CarListItemViewModel> Cars { get; set; } = new();
     }
 }

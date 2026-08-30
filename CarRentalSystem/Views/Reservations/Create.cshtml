@@ -1,0 +1,200 @@
+﻿@model CarRentalSystem.ViewModels.CreateReservationViewModel
+
+@{
+    ViewData["Title"] = "Confirm Booking";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Confirm Booking - DriveEase</title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/reservation.css"
+          asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="reservation-page">
+
+        <div class="reservation-container">
+
+            <a asp-controller="Cars"
+               asp-action="Details"
+               asp-route-id="@Model.Car.Id"
+               asp-route-pickupDate="@Model.PickupDate.ToString("yyyy-MM-dd")"
+               asp-route-returnDate="@Model.ReturnDate.ToString("yyyy-MM-dd")"
+               class="back-link">
+                ← Back to Car
+            </a>
+
+            <div class="reservation-grid">
+
+                <section class="car-summary">
+
+                    <img src="@Model.Car.ImageUrl"
+                         alt="@Model.Car.Brand @Model.Car.Model" />
+
+                    <div class="car-summary-content">
+
+                        <span class="car-brand">
+                            @Model.Car.Brand
+                        </span>
+
+                        <h2>
+                            @Model.Car.Model
+                        </h2>
+
+                        <p>
+                            📍 @Model.Car.Location
+                        </p>
+
+                        <div class="spec-row">
+
+                            <span>
+                                @Model.Car.Transmission
+                            </span>
+
+                            <span>
+                                @Model.Car.FuelType
+                            </span>
+
+                            <span>
+                                @Model.Car.Seats Seats
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <section class="booking-card">
+
+                    <div class="booking-header">
+                        <span>COMPLETE YOUR BOOKING</span>
+
+                        <h1>Confirm Reservation</h1>
+
+                        <p>
+                            Review your rental details before confirming.
+                        </p>
+                    </div>
+
+
+                    <form asp-controller="Reservations"
+                          asp-action="Create"
+                          method="post">
+
+                        <input asp-for="CarId"
+                               type="hidden" />
+
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="validation-summary">
+                        </div>
+
+
+                        <div class="date-grid">
+
+                            <div class="form-group">
+
+                                <label asp-for="PickupDate"></label>
+
+                                <input asp-for="PickupDate"
+                                       type="date"
+                                       class="form-control" />
+
+                                <span asp-validation-for="PickupDate"
+                                      class="validation-message">
+                                </span>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label asp-for="ReturnDate"></label>
+
+                                <input asp-for="ReturnDate"
+                                       type="date"
+                                       class="form-control" />
+
+                                <span asp-validation-for="ReturnDate"
+                                      class="validation-message">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="price-box">
+
+                            <div class="price-row">
+                                <span>Daily Rate</span>
+
+                                <strong>
+                                    $@Model.Car.DailyRate.ToString("0.00")
+                                </strong>
+                            </div>
+
+
+                            <div class="price-row">
+                                <span>Rental Days</span>
+
+                                <strong>
+                                    @Model.RentalDays
+                                </strong>
+                            </div>
+
+
+                            <div class="divider"></div>
+
+
+                            <div class="price-row total">
+                                <span>Total Price</span>
+
+                                <strong>
+                                    $@Model.TotalPrice.ToString("0.00")
+                                </strong>
+                            </div>
+
+                        </div>
+
+
+                        <button type="submit"
+                                class="confirm-button">
+
+                            Confirm Reservation
+
+                            <span>→</span>
+
+                        </button>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

@@ -66,7 +66,76 @@ namespace CarRentalSystem.Controllers
                         reservation.ReturnDate > pickupDate));
             }
 
-            model.Cars = await query.ToListAsync();
+            var cars = await query
+    .Include(c => c.Reservations)
+    .ToListAsync();
+
+            var today = DateTime.Today;
+
+            model.Cars = cars.Select(car =>
+            {
+                var reservations = car.Reservations
+                    .Where(r =>
+                        r.Status != ReservationStatus.Cancelled &&
+                        r.ReturnDate.Date > today)
+                    .OrderBy(r => r.PickupDate)
+                    .ToList();
+
+                var currentReservation = reservations
+                    .FirstOrDefault(r =>
+                        r.PickupDate.Date <= today &&
+                        r.ReturnDate.Date > today);
+
+                var reservedPeriods = reservations
+                    .Select(r => new ReservationPeriodViewModel
+                    {
+                        PickupDate = r.PickupDate,
+                        ReturnDate = r.ReturnDate
+                    })
+                    .ToList();
+
+                return new CarListItemViewModel
+                {
+                    Car = car,
+
+                    IsAvailableNow =
+                        currentReservation == null,
+
+                    AvailableFrom =
+                        currentReservation?.ReturnDate,
+
+                    ReservedPeriods =
+                        reservedPeriods
+                };
+
+            }).ToList();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(
+     int id,
+     DateTime? pickupDate,
+     DateTime? returnDate)
+        {
+            var car = await _context.Cars
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c =>
+                    c.Id == id &&
+                    c.IsActive);
+
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            var model = new CarDetailsViewModel
+            {
+                Car = car,
+                PickupDate = pickupDate,
+                ReturnDate = returnDate
+            };
 
             return View(model);
         }

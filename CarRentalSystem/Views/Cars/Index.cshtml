@@ -7,9 +7,12 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
 
     <title>Available Cars - DriveEase</title>
 
@@ -21,7 +24,12 @@
           asp-append-version="true" />
 </head>
 
+
 <body>
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
 
     <header class="main-header">
 
@@ -29,11 +37,20 @@
            asp-action="Index"
            class="brand">
 
-            <span class="brand-icon">🚘</span>
+            <span class="brand-icon">
+                🚘
+            </span>
 
             <div>
-                <h2>Drive<span>Ease</span></h2>
-                <small>PREMIUM CAR RENTAL</small>
+
+                <h2>
+                    Drive<span>Ease</span>
+                </h2>
+
+                <small>
+                    PREMIUM CAR RENTAL
+                </small>
+
             </div>
 
         </a>
@@ -44,12 +61,19 @@
             <a asp-controller="Cars"
                asp-action="Index"
                class="active">
+
                 Cars
+
             </a>
 
-            <a href="#">
+
+            <a asp-controller="Reservations"
+               asp-action="MyReservations">
+
                 My Reservations
+
             </a>
+
 
             <a href="#">
                 Profile
@@ -61,6 +85,7 @@
         <div class="user-menu">
 
             <div class="user-info">
+
                 <span class="welcome-text">
                     Welcome
                 </span>
@@ -68,7 +93,9 @@
                 <strong>
                     @User.Identity?.Name
                 </strong>
+
             </div>
+
 
             <form asp-controller="Account"
                   asp-action="Logout"
@@ -76,7 +103,9 @@
 
                 <button type="submit"
                         class="logout-button">
+
                     Logout
+
                 </button>
 
             </form>
@@ -88,11 +117,16 @@
 
     <main>
 
-        <!-- HERO -->
+
+        <!-- =========================================
+             HERO
+        ========================================== -->
 
         <section class="hero">
 
-            <div class="hero-overlay"></div>
+            <div class="hero-overlay">
+            </div>
+
 
             <div class="hero-content">
 
@@ -100,14 +134,23 @@
                     FIND YOUR PERFECT RIDE
                 </span>
 
+
                 <h1>
+
                     Wherever You Go,<br />
-                    <span>We’ll Get You There.</span>
+
+                    <span>
+                        We’ll Get You There.
+                    </span>
+
                 </h1>
 
+
                 <p>
+
                     Explore our premium fleet and find the perfect
                     vehicle for your next journey.
+
                 </p>
 
             </div>
@@ -115,18 +158,26 @@
         </section>
 
 
-        <!-- SEARCH -->
+
+        <!-- =========================================
+             SEARCH
+        ========================================== -->
 
         <section class="search-wrapper">
 
             <div class="search-card">
 
+
                 <div class="search-title">
-                    <h3>Find Your Car</h3>
+
+                    <h3>
+                        Find Your Car
+                    </h3>
 
                     <p>
-                        Choose your location and preferences
+                        Choose your location, dates and preferences
                     </p>
+
                 </div>
 
 
@@ -135,70 +186,133 @@
                       asp-action="Index"
                       class="search-form">
 
+
+                    <!-- Location -->
+
                     <div class="search-field">
-                        <label asp-for="Location"></label>
+
+                        <label asp-for="Location">
+                        </label>
+
 
                         <select asp-for="Location">
-                            <option value="">All Locations</option>
-                            <option value="Nablus">Nablus</option>
-                            <option value="Ramallah">Ramallah</option>
-                            <option value="Jenin">Jenin</option>
-                            <option value="Bethlehem">Bethlehem</option>
+
+                            <option value="">
+                                All Locations
+                            </option>
+
+                            <option value="Nablus">
+                                Nablus
+                            </option>
+
+                            <option value="Ramallah">
+                                Ramallah
+                            </option>
+
+                            <option value="Jenin">
+                                Jenin
+                            </option>
+
+                            <option value="Bethlehem">
+                                Bethlehem
+                            </option>
+
                         </select>
+
                     </div>
 
 
+
+                    <!-- Pickup Date -->
+
                     <div class="search-field">
-                        <label asp-for="PickupDate"></label>
+
+                        <label asp-for="PickupDate">
+                        </label>
+
 
                         <input asp-for="PickupDate"
                                type="date" />
 
+
                         <span asp-validation-for="PickupDate"
-                              class="search-validation"></span>
+                              class="search-validation">
+                        </span>
+
                     </div>
 
 
+
+                    <!-- Return Date -->
+
                     <div class="search-field">
-                        <label asp-for="ReturnDate"></label>
+
+                        <label asp-for="ReturnDate">
+                        </label>
+
 
                         <input asp-for="ReturnDate"
                                type="date" />
 
+
                         <span asp-validation-for="ReturnDate"
-                              class="search-validation"></span>
+                              class="search-validation">
+                        </span>
+
                     </div>
 
 
+
+                    <!-- Car Type -->
+
                     <div class="search-field">
-                        <label asp-for="Type"></label>
+
+                        <label asp-for="Type">
+                        </label>
+
 
                         <select asp-for="Type"
                                 asp-items="Html.GetEnumSelectList<CarRentalSystem.Models.CarType>()">
 
-                            <option value="">All Types</option>
+                            <option value="">
+                                All Types
+                            </option>
 
                         </select>
+
                     </div>
 
 
+
+                    <!-- Transmission -->
+
                     <div class="search-field">
-                        <label asp-for="Transmission"></label>
+
+                        <label asp-for="Transmission">
+                        </label>
+
 
                         <select asp-for="Transmission"
                                 asp-items="Html.GetEnumSelectList<CarRentalSystem.Models.TransmissionType>()">
 
-                            <option value="">Any</option>
+                            <option value="">
+                                Any
+                            </option>
 
                         </select>
+
                     </div>
+
 
 
                     <button type="submit"
                             class="search-button">
 
                         Search Cars
-                        <span>→</span>
+
+                        <span>
+                            →
+                        </span>
 
                     </button>
 
@@ -209,24 +323,33 @@
         </section>
 
 
-        <!-- CARS -->
+
+        <!-- =========================================
+             CARS
+        ========================================== -->
 
         <section class="cars-section">
 
+
             <div class="section-header">
 
+
                 <div>
+
                     <span class="section-label">
                         OUR FLEET
                     </span>
+
 
                     <h2>
                         Available Cars
                     </h2>
 
+
                     <p>
                         Choose from our collection of vehicles.
                     </p>
+
                 </div>
 
 
@@ -243,48 +366,105 @@
             </div>
 
 
+
+            <!-- No Results -->
             @if (!Model.Cars.Any())
             {
+
                 <div class="empty-state">
 
                     <div class="empty-icon">
                         🚗
                     </div>
 
+
                     <h3>
                         No cars available
                     </h3>
 
+
                     <p>
-                        Try changing your search preferences.
+                        Try changing your search dates or preferences.
                     </p>
 
                 </div>
+
             }
+
             else
             {
+
                 <div class="cars-grid">
 
-                    @foreach (var car in Model.Cars)
+
+                    @foreach (var item in Model.Cars)
                     {
+
+                        var car = item.Car;
+
+
                         <article class="car-card">
 
+
+                            <!-- =========================
+                                 CAR IMAGE
+                            ========================== -->
+
                             <div class="car-image-wrapper">
+
 
                                 <img src="@car.ImageUrl"
                                      alt="@car.Brand @car.Model"
                                      class="car-image" />
 
+
+                                <!-- Car Type -->
+
                                 <span class="car-type">
                                     @car.Type
                                 </span>
 
+
+
+                                <!-- Current Availability -->
+                                @if (item.IsAvailableNow)
+                                {
+
+                                    <span class="availability available">
+
+                                        ● Available Now
+
+                                    </span>
+
+                                }
+
+                                else
+                                {
+
+                                    <span class="availability reserved">
+
+                                        ● Reserved Now
+
+                                    </span>
+
+                                }
+
+
                             </div>
 
 
+
+                            <!-- =========================
+                                 CAR CONTENT
+                            ========================== -->
+
                             <div class="car-content">
 
+
+                                <!-- Name + Year -->
+
                                 <div class="car-heading">
+
 
                                     <div>
 
@@ -292,11 +472,13 @@
                                             @car.Brand
                                         </span>
 
+
                                         <h3>
                                             @car.Model
                                         </h3>
 
                                     </div>
+
 
                                     <span class="car-year">
                                         @car.Year
@@ -305,22 +487,133 @@
                                 </div>
 
 
+
+                                <!-- Location -->
+
                                 <div class="car-location">
 
-                                    <span>📍</span>
+                                    <span>
+                                        📍
+                                    </span>
 
                                     @car.Location
 
                                 </div>
 
 
+
+                                <!-- =========================
+                                     RESERVED PERIODS
+                                ========================== -->
+                                @if (item.ReservedPeriods.Any())
+                                {
+
+                                    <div class="booking-schedule">
+
+
+                                        <div class="schedule-header">
+
+                                            <span>
+                                                📅
+                                            </span>
+
+                                            <strong>
+                                                Reserved Dates
+                                            </strong>
+
+                                        </div>
+
+
+                                        <div class="reserved-periods">
+
+
+                                            @foreach (var period in item.ReservedPeriods)
+                                            {
+
+                                                <div class="reserved-period">
+
+
+                                                    <span>
+                                                        @period.PickupDate.ToString("dd MMM")
+                                                    </span>
+
+
+                                                    <span class="date-arrow">
+                                                        →
+                                                    </span>
+
+
+                                                    <span>
+                                                        @period.ReturnDate.ToString("dd MMM")
+                                                    </span>
+
+
+                                                </div>
+
+                                            }
+
+
+                                        </div>
+
+                                    </div>
+
+                                }
+
+                                else
+                                {
+
+                                    <div class="fully-available">
+
+                                        ✓ No upcoming reservations
+
+                                    </div>
+
+                                }
+
+
+
+                                <!-- =========================
+                                     CURRENT RESERVATION INFO
+                                ========================== -->
+                                @if (!item.IsAvailableNow &&
+                                                                    item.AvailableFrom.HasValue)
+                                {
+
+                                    <div class="current-reservation-info">
+
+                                        <span>
+                                            Currently reserved
+                                        </span>
+
+
+                                        <strong>
+
+                                            Available from
+
+                                            @item.AvailableFrom.Value
+                                            .ToString("dd MMM yyyy")
+
+                                        </strong>
+
+                                    </div>
+
+                                }
+
+
+
+                                <!-- =========================
+                                     CAR FEATURES
+                                ========================== -->
+
                                 <div class="car-features">
+
 
                                     <div class="feature">
 
                                         <span class="feature-icon">
                                             ⚙
                                         </span>
+
 
                                         <span>
                                             @car.Transmission
@@ -329,11 +622,13 @@
                                     </div>
 
 
+
                                     <div class="feature">
 
                                         <span class="feature-icon">
                                             ⛽
                                         </span>
+
 
                                         <span>
                                             @car.FuelType
@@ -342,11 +637,13 @@
                                     </div>
 
 
+
                                     <div class="feature">
 
                                         <span class="feature-icon">
                                             👥
                                         </span>
+
 
                                         <span>
                                             @car.Seats Seats
@@ -354,47 +651,69 @@
 
                                     </div>
 
+
                                 </div>
 
 
+
+                                <!-- =========================
+                                     PRICE + DETAILS
+                                ========================== -->
+
                                 <div class="car-footer">
 
+
                                     <div class="price">
+
 
                                         <span class="currency">
                                             $
                                         </span>
 
+
                                         <strong>
                                             @car.DailyRate.ToString("0")
                                         </strong>
+
 
                                         <span class="per-day">
                                             / day
                                         </span>
 
+
                                     </div>
+
 
 
                                     <a asp-controller="Cars"
                                        asp-action="Details"
                                        asp-route-id="@car.Id"
+                                       asp-route-pickupDate="@Model.PickupDate?.ToString("yyyy-MM-dd")"
+                                       asp-route-returnDate="@Model.ReturnDate?.ToString("yyyy-MM-dd")"
                                        class="details-button">
 
                                         View Details
 
-                                        <span>→</span>
+                                        <span>
+                                            →
+                                        </span>
 
                                     </a>
 
+
                                 </div>
+
 
                             </div>
 
+
                         </article>
+
                     }
 
+
                 </div>
+
             }
 
         </section>
@@ -402,13 +721,22 @@
     </main>
 
 
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
     <footer class="main-footer">
+
 
         <div class="footer-brand">
 
             <strong>
+
                 Drive<span>Ease</span>
+
             </strong>
+
 
             <p>
                 Premium cars. Simple booking.
@@ -416,11 +744,15 @@
 
         </div>
 
+
         <span>
             © 2026 DriveEase
         </span>
 
+
     </footer>
 
+
 </body>
+
 </html>

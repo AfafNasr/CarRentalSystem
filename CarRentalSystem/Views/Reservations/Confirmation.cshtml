@@ -1,0 +1,169 @@
+﻿@model CarRentalSystem.Models.Reservation
+
+@{
+    ViewData["Title"] = "Reservation Confirmed";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Reservation Confirmed - DriveEase</title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/confirmation.css"
+          asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="confirmation-page">
+
+        <div class="confirmation-card">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <span class="success-label">
+                BOOKING SUCCESSFUL
+            </span>
+
+            <h1>
+                Reservation Confirmed
+            </h1>
+
+            <p class="confirmation-message">
+                Your reservation has been created successfully.
+                You can review the details below.
+            </p>
+
+
+            <div class="car-box">
+
+                <img src="@Model.Car.ImageUrl"
+                     alt="@Model.Car.Brand @Model.Car.Model" />
+
+                <div>
+
+                    <span class="brand">
+                        @Model.Car.Brand
+                    </span>
+
+                    <h2>
+                        @Model.Car.Model
+                    </h2>
+
+                    <p>
+                        📍 @Model.Car.Location
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="details-grid">
+
+                <div class="detail">
+
+                    <span>
+                        Reservation ID
+                    </span>
+
+                    <strong>
+                        #@Model.Id
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Status
+                    </span>
+
+                    <strong class="status">
+                        @Model.Status
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Pickup Date
+                    </span>
+
+                    <strong>
+                        @Model.PickupDate.ToString("dd MMM yyyy")
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Return Date
+                    </span>
+
+                    <strong>
+                        @Model.ReturnDate.ToString("dd MMM yyyy")
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="total-box">
+
+                <span>
+                    Total Price
+                </span>
+
+                <strong>
+                    $@Model.TotalPrice.ToString("0.00")
+                </strong>
+
+            </div>
+
+
+            <div class="actions">
+
+                <a asp-controller="Reservations"
+                   asp-action="MyReservations"
+                   class="primary-button">
+
+                    My Reservations
+
+                    <span>→</span>
+
+                </a>
+
+
+                <a asp-controller="Cars"
+                   asp-action="Index"
+                   class="secondary-button">
+
+                    Browse More Cars
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

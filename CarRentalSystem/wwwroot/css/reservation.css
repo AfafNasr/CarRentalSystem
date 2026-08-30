@@ -1,0 +1,269 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #172235;
+    background: linear-gradient( 145deg, #f8fafc, #edf1f6 );
+}
+
+.reservation-page {
+    min-height: 100vh;
+    padding: 55px 30px;
+}
+
+.reservation-container {
+    width: 100%;
+    max-width: 1180px;
+    margin: auto;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: #6f7989;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+    .back-link:hover {
+        color: #c58d34;
+    }
+
+.reservation-grid {
+    display: grid;
+    grid-template-columns: 46% 54%;
+    overflow: hidden;
+    border-radius: 24px;
+    background: white;
+    box-shadow: 0 24px 60px rgba(15, 31, 54, 0.11);
+    border: 1px solid rgba(15, 31, 54, 0.07);
+}
+
+
+/* CAR */
+
+.car-summary {
+    position: relative;
+    min-height: 650px;
+    overflow: hidden;
+    background: #0d1b2f;
+}
+
+    .car-summary img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .car-summary::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient( 180deg, transparent 35%, rgba(5, 15, 29, 0.92) );
+    }
+
+.car-summary-content {
+    position: absolute;
+    left: 38px;
+    right: 38px;
+    bottom: 40px;
+    z-index: 2;
+    color: white;
+}
+
+.car-brand {
+    color: #e1a440;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.car-summary h2 {
+    margin: 5px 0 8px;
+    font-size: 38px;
+}
+
+.car-summary p {
+    margin: 0;
+    color: rgba(255,255,255,0.64);
+    font-size: 13px;
+}
+
+.spec-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+    .spec-row span {
+        padding: 7px 11px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.10);
+        border: 1px solid rgba(255,255,255,0.11);
+        font-size: 10px;
+    }
+
+
+/* BOOKING */
+
+.booking-card {
+    padding: 55px;
+}
+
+.booking-header > span {
+    color: #c68e35;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.booking-header h1 {
+    margin: 8px 0;
+    color: #132039;
+    font-size: 36px;
+}
+
+.booking-header p {
+    margin: 0;
+    color: #858e9d;
+    font-size: 13px;
+}
+
+.date-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 35px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #344054;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.form-group input {
+    min-height: 50px;
+    border: 1px solid #dfe4ea;
+    border-radius: 9px;
+    background: #fbfcfd;
+    font-size: 13px;
+}
+
+    .form-group input:focus {
+        border-color: #d7a247;
+        box-shadow: 0 0 0 3px rgba(215, 162, 71, 0.10);
+    }
+
+.validation-summary,
+.validation-message {
+    color: #dc3545;
+    font-size: 11px;
+}
+
+.validation-message {
+    display: block;
+    margin-top: 5px;
+}
+
+
+/* PRICE */
+
+.price-box {
+    margin-top: 30px;
+    padding: 24px;
+    border-radius: 14px;
+    background: #f7f9fb;
+    border: 1px solid #edf0f3;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    color: #737d8c;
+    font-size: 12px;
+}
+
+    .price-row strong {
+        color: #293548;
+    }
+
+.divider {
+    height: 1px;
+    margin: 17px 0;
+    background: #e3e7ec;
+}
+
+.price-row.total {
+    margin-bottom: 0;
+    color: #1c293b;
+    font-size: 14px;
+}
+
+    .price-row.total strong {
+        color: #c88e33;
+        font-size: 27px;
+    }
+
+
+/* BUTTON */
+
+.confirm-button {
+    width: 100%;
+    height: 54px;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient( 135deg, #d89a31, #ebb54a );
+    color: #152033;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .confirm-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 9px 22px rgba(216,154,49,0.27);
+    }
+
+
+/* RESPONSIVE */
+
+@media (max-width: 850px) {
+
+    .reservation-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .car-summary {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 550px) {
+
+    .reservation-page {
+        padding: 30px 18px;
+    }
+
+    .booking-card {
+        padding: 32px 22px;
+    }
+
+    .date-grid {
+        grid-template-columns: 1fr;
+    }
+}

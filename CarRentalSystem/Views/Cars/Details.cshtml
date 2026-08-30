@@ -1,0 +1,249 @@
+﻿@model CarRentalSystem.ViewModels.CarDetailsViewModel
+
+@{
+    ViewData["Title"] = $"{Model.Car.Brand} {Model.Car.Model}";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - DriveEase</title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/car-details.css"
+          asp-append-version="true" />
+</head>
+
+<body>
+
+    <header class="main-header">
+
+        <a asp-controller="Cars"
+           asp-action="Index"
+           class="brand">
+
+            <span class="brand-icon">🚘</span>
+
+            <div>
+                <h2>Drive<span>Ease</span></h2>
+                <small>PREMIUM CAR RENTAL</small>
+            </div>
+        </a>
+
+        <nav class="navigation">
+            <a asp-controller="Cars"
+               asp-action="Index">
+                Cars
+            </a>
+
+            <a asp-controller="Reservations"
+               asp-action="MyReservations">
+                My Reservations
+            </a>
+            <a href="#">Profile</a>
+        </nav>
+
+        <div class="user-menu">
+
+            <div class="user-info">
+                <span>Welcome</span>
+                <strong>@User.Identity?.Name</strong>
+            </div>
+
+            <form asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                <button type="submit"
+                        class="logout-button">
+                    Logout
+                </button>
+            </form>
+
+        </div>
+
+    </header>
+
+
+    <main class="details-page">
+
+        <a asp-controller="Cars"
+           asp-action="Index"
+           class="back-link">
+            ← Back to Cars
+        </a>
+
+
+        <section class="details-card">
+
+            <div class="car-image-section">
+
+                <img src="@Model.Car.ImageUrl"
+                     alt="@Model.Car.Brand @Model.Car.Model" />
+
+                <span class="car-type">
+                    @Model.Car.Type
+                </span>
+
+            </div>
+
+
+            <div class="car-info-section">
+
+                <span class="car-brand">
+                    @Model.Car.Brand
+                </span>
+
+                <div class="title-row">
+
+                    <h1>
+                        @Model.Car.Model
+                    </h1>
+
+                    <span class="year">
+                        @Model.Car.Year
+                    </span>
+
+                </div>
+
+
+                <div class="location">
+                    📍 @Model.Car.Location
+                </div>
+
+
+                <div class="specifications">
+
+                    <div class="spec">
+                        <span class="spec-icon">⚙</span>
+
+                        <div>
+                            <small>Transmission</small>
+                            <strong>@Model.Car.Transmission</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="spec">
+                        <span class="spec-icon">⛽</span>
+
+                        <div>
+                            <small>Fuel Type</small>
+                            <strong>@Model.Car.FuelType</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="spec">
+                        <span class="spec-icon">👥</span>
+
+                        <div>
+                            <small>Seats</small>
+                            <strong>@Model.Car.Seats</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="spec">
+                        <span class="spec-icon">🎨</span>
+
+                        <div>
+                            <small>Color</small>
+                            <strong>@Model.Car.Color</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="price-section">
+
+                    <div>
+                        <span class="price-label">
+                            Daily Rate
+                        </span>
+
+                        <div class="price">
+                            <span>$</span>
+
+                            <strong>
+                                @Model.Car.DailyRate.ToString("0")
+                            </strong>
+
+                            <small>/ day</small>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="booking-panel">
+
+                    <div class="booking-heading">
+                        <h3>Plan Your Rental</h3>
+
+                        <p>
+                            Select your rental dates to continue.
+                        </p>
+                    </div>
+
+
+                    <form asp-controller="Reservations"
+                          asp-action="Create"
+                          method="get"
+                          class="booking-form">
+
+                        <input type="hidden"
+                               name="carId"
+                               value="@Model.Car.Id" />
+
+
+                        <div class="date-field">
+
+                            <label asp-for="PickupDate"></label>
+
+                            <input asp-for="PickupDate"
+                                   type="date"
+                                   name="pickupDate" />
+
+                        </div>
+
+
+                        <div class="date-field">
+
+                            <label asp-for="ReturnDate"></label>
+
+                            <input asp-for="ReturnDate"
+                                   type="date"
+                                   name="returnDate" />
+
+                        </div>
+
+
+                        <button type="submit"
+                                class="book-button">
+
+                            Continue Booking
+                            <span>→</span>
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

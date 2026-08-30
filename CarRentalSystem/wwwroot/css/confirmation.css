@@ -1,0 +1,245 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient( 145deg, #081525, #13243d );
+    color: #182338;
+}
+
+
+.confirmation-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 45px 20px;
+}
+
+
+.confirmation-card {
+    width: 100%;
+    max-width: 680px;
+    padding: 48px;
+    border-radius: 25px;
+    background: white;
+    text-align: center;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
+}
+
+
+.success-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(46, 167, 89, 0.12);
+    color: #2fa759;
+    font-size: 34px;
+    font-weight: 700;
+}
+
+
+.success-label {
+    color: #c58d34;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+
+.confirmation-card h1 {
+    margin: 8px 0 10px;
+    color: #142039;
+    font-size: 34px;
+}
+
+
+.confirmation-message {
+    max-width: 470px;
+    margin: 0 auto 30px;
+    color: #7d8795;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* CAR */
+
+.car-box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px;
+    border-radius: 15px;
+    background: #f6f8fa;
+    text-align: left;
+}
+
+
+    .car-box img {
+        width: 135px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 11px;
+    }
+
+
+    .car-box .brand {
+        color: #c58d34;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+
+
+    .car-box h2 {
+        margin: 3px 0 4px;
+        color: #19263a;
+        font-size: 21px;
+    }
+
+
+    .car-box p {
+        margin: 0;
+        color: #818b99;
+        font-size: 11px;
+    }
+
+
+/* DETAILS */
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 22px;
+}
+
+
+.detail {
+    padding: 16px;
+    border-radius: 11px;
+    border: 1px solid #e7eaee;
+    text-align: left;
+}
+
+
+    .detail span {
+        display: block;
+        margin-bottom: 5px;
+        color: #969eaa;
+        font-size: 10px;
+    }
+
+
+    .detail strong {
+        color: #263247;
+        font-size: 13px;
+    }
+
+
+    .detail .status {
+        color: #c58d34;
+    }
+
+
+/* TOTAL */
+
+.total-box {
+    margin-top: 22px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 13px;
+    background: #0d1b2f;
+    color: white;
+}
+
+
+    .total-box span {
+        font-size: 12px;
+        color: rgba(255,255,255,0.6);
+    }
+
+
+    .total-box strong {
+        color: #e3a642;
+        font-size: 27px;
+    }
+
+
+/* ACTIONS */
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+
+.primary-button,
+.secondary-button {
+    flex: 1;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.primary-button {
+    gap: 8px;
+    background: linear-gradient( 135deg, #d89a31, #ebb54a );
+    color: #152033;
+}
+
+
+.secondary-button {
+    border: 1px solid #dde2e8;
+    color: #677284;
+    background: white;
+}
+
+
+.primary-button:hover {
+    color: #152033;
+}
+
+
+.secondary-button:hover {
+    color: #c58d34;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 550px) {
+
+    .confirmation-card {
+        padding: 35px 22px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .car-box img {
+        width: 110px;
+    }
+}
