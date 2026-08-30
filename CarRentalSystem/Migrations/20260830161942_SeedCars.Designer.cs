@@ -4,6 +4,7 @@ using CarRentalSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalSystem.Migrations
 {
     [DbContext(typeof(CarRentalDbContext))]
-    partial class CarRentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260830161942_SeedCars")]
+    partial class SeedCars
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,110 +79,6 @@ namespace CarRentalSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cars");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Brand = "Toyota",
-                            Color = "White",
-                            CreatedAt = new DateTime(2026, 8, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DailyRate = 45m,
-                            FuelType = 1,
-                            ImageUrl = "/images/cars/toyota-corolla.jpg",
-                            IsActive = true,
-                            Location = "Nablus",
-                            Model = "Corolla",
-                            Seats = 5,
-                            Transmission = 1,
-                            Type = 1,
-                            Year = 2025
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Brand = "Hyundai",
-                            Color = "Black",
-                            CreatedAt = new DateTime(2026, 8, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DailyRate = 50m,
-                            FuelType = 1,
-                            ImageUrl = "/images/cars/hyundai-elantra.jpg",
-                            IsActive = true,
-                            Location = "Ramallah",
-                            Model = "Elantra",
-                            Seats = 5,
-                            Transmission = 1,
-                            Type = 1,
-                            Year = 2025
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Brand = "Kia",
-                            Color = "Gray",
-                            CreatedAt = new DateTime(2026, 8, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DailyRate = 70m,
-                            FuelType = 3,
-                            ImageUrl = "/images/cars/kia-sportage.jpg",
-                            IsActive = true,
-                            Location = "Nablus",
-                            Model = "Sportage",
-                            Seats = 5,
-                            Transmission = 1,
-                            Type = 2,
-                            Year = 2025
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Brand = "Hyundai",
-                            Color = "Blue",
-                            CreatedAt = new DateTime(2026, 8, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DailyRate = 68m,
-                            FuelType = 1,
-                            ImageUrl = "/images/cars/hyundai-tucson.jpg",
-                            IsActive = true,
-                            Location = "Jenin",
-                            Model = "Tucson",
-                            Seats = 5,
-                            Transmission = 1,
-                            Type = 2,
-                            Year = 2024
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Brand = "Tesla",
-                            Color = "Red",
-                            CreatedAt = new DateTime(2026, 8, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DailyRate = 95m,
-                            FuelType = 4,
-                            ImageUrl = "/images/cars/tesla-model-3.jpg",
-                            IsActive = true,
-                            Location = "Ramallah",
-                            Model = "Model 3",
-                            Seats = 5,
-                            Transmission = 1,
-                            Type = 1,
-                            Year = 2025
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Brand = "BMW",
-                            Color = "Black",
-                            CreatedAt = new DateTime(2026, 8, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DailyRate = 140m,
-                            FuelType = 1,
-                            ImageUrl = "/images/cars/bmw-x5.jpg",
-                            IsActive = true,
-                            Location = "Bethlehem",
-                            Model = "X5",
-                            Seats = 5,
-                            Transmission = 1,
-                            Type = 2,
-                            Year = 2025
-                        });
                 });
 
             modelBuilder.Entity("CarRentalSystem.Models.Reservation", b =>
