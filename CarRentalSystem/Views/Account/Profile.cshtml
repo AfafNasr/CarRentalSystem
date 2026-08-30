@@ -1,0 +1,526 @@
+﻿@model CarRentalSystem.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Profile - DriveEase</title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/profile.css"
+          asp-append-version="true" />
+
+</head>
+
+
+<body>
+
+
+    <header class="main-header">
+
+        <a asp-controller="Cars"
+           asp-action="Index"
+           class="brand">
+
+            <span class="brand-icon">
+                🚘
+            </span>
+
+            <div>
+
+                <h2>
+                    Drive<span>Ease</span>
+                </h2>
+
+                <small>
+                    PREMIUM CAR RENTAL
+                </small>
+
+            </div>
+
+        </a>
+
+
+        <nav class="navigation">
+
+            <a asp-controller="Cars"
+               asp-action="Index">
+                Cars
+            </a>
+
+            <a asp-controller="Reservations"
+               asp-action="MyReservations">
+                My Reservations
+            </a>
+
+            <a asp-controller="Account"
+               asp-action="Profile"
+               class="active">
+                Profile
+            </a>
+
+        </nav>
+
+
+        <div class="user-menu">
+
+            <div class="user-info">
+
+                <span>
+                    Welcome
+                </span>
+
+                <strong>
+                    @User.Identity?.Name
+                </strong>
+
+            </div>
+
+
+            <form asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                <button type="submit"
+                        class="logout-button">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </header>
+
+
+
+    <main class="profile-page">
+
+
+        <div class="profile-heading">
+
+            <span>
+                ACCOUNT SETTINGS
+            </span>
+
+            <h1>
+                My Profile
+            </h1>
+
+            <p>
+                Manage your personal information and rental details.
+            </p>
+
+        </div>
+
+
+
+        @if (TempData["ProfileSuccess"] != null)
+        {
+            <div class="success-message">
+
+                <span>
+                    ✓
+                </span>
+
+                @TempData["ProfileSuccess"]
+
+            </div>
+        }
+
+
+
+        <div class="profile-layout">
+
+
+            <!-- LEFT SIDE -->
+
+            <aside class="profile-sidebar">
+
+
+                <div class="avatar">
+
+                    @if (!string.IsNullOrWhiteSpace(Model.FirstName))
+                    {
+                        @Model.FirstName.Substring(0, 1).ToUpper()
+                    }
+
+                </div>
+
+
+                <h2>
+                    @Model.FirstName @Model.LastName
+                </h2>
+
+
+                <p>
+                    @Model.Email
+                </p>
+
+
+                <div class="sidebar-divider">
+                </div>
+
+
+                <div class="sidebar-info">
+
+                    <span>
+                        DRIVER PROFILE
+                    </span>
+
+                    <div>
+
+                        <small>
+                            City
+                        </small>
+
+                        <strong>
+                            @Model.City
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <small>
+                            Country
+                        </small>
+
+                        <strong>
+                            @Model.Country
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <small>
+                            License
+                        </small>
+
+                        <strong>
+                            @Model.DriversLicenseNumber
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </aside>
+
+
+
+            <!-- FORM -->
+
+            <section class="profile-card">
+
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span>
+                            PERSONAL INFORMATION
+                        </span>
+
+                        <h2>
+                            Profile Details
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <form asp-controller="Account"
+                      asp-action="Profile"
+                      method="post">
+
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="validation-summary">
+                    </div>
+
+
+
+                    <div class="form-grid">
+
+
+                        <!-- FIRST NAME -->
+
+                        <div class="form-field">
+
+                            <label asp-for="FirstName">
+                            </label>
+
+                            <input asp-for="FirstName" />
+
+                            <span asp-validation-for="FirstName"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- LAST NAME -->
+
+                        <div class="form-field">
+
+                            <label asp-for="LastName">
+                            </label>
+
+                            <input asp-for="LastName" />
+
+                            <span asp-validation-for="LastName"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-field full-width">
+
+                            <label asp-for="Email">
+                            </label>
+
+                            <input asp-for="Email" />
+
+                            <span asp-validation-for="Email"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- PHONE -->
+
+                        <div class="form-field">
+
+                            <label asp-for="PhoneNumber">
+                            </label>
+
+                            <input asp-for="PhoneNumber" />
+
+                            <span asp-validation-for="PhoneNumber"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- DOB -->
+
+                        <div class="form-field">
+
+                            <label asp-for="DateOfBirth">
+                            </label>
+
+                            <input asp-for="DateOfBirth"
+                                   type="date" />
+
+                            <span asp-validation-for="DateOfBirth"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- ADDRESS 1 -->
+
+                        <div class="form-field full-width">
+
+                            <label asp-for="AddressLine1">
+                            </label>
+
+                            <input asp-for="AddressLine1" />
+
+                            <span asp-validation-for="AddressLine1"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- ADDRESS 2 -->
+
+                        <div class="form-field full-width">
+
+                            <label asp-for="AddressLine2">
+                            </label>
+
+                            <input asp-for="AddressLine2" />
+
+                            <span asp-validation-for="AddressLine2"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- CITY -->
+
+                        <div class="form-field">
+
+                            <label asp-for="City">
+                            </label>
+
+                            <input asp-for="City" />
+
+                            <span asp-validation-for="City"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- COUNTRY -->
+
+                        <div class="form-field">
+
+                            <label asp-for="Country">
+                            </label>
+
+                            <select asp-for="Country">
+
+                                <option value="">
+                                    Select a country
+                                </option>
+
+                                <option value="Palestine">
+                                    Palestine
+                                </option>
+
+                                <option value="Jordan">
+                                    Jordan
+                                </option>
+
+                                <option value="Saudi Arabia">
+                                    Saudi Arabia
+                                </option>
+
+                                <option value="United Arab Emirates">
+                                    United Arab Emirates
+                                </option>
+
+                                <option value="Egypt">
+                                    Egypt
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="Country"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- LICENSE -->
+
+                        <div class="form-field full-width">
+
+                            <label asp-for="DriversLicenseNumber">
+                            </label>
+
+                            <input asp-for="DriversLicenseNumber" />
+
+                            <span asp-validation-for="DriversLicenseNumber"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                        <a asp-controller="Account"
+                           asp-action="ChangePassword"
+                           class="change-password-button">
+                            Change Password
+                        </a>
+
+                    </div>
+
+                   
+
+
+                    <div class="form-actions">
+
+
+                        <a asp-controller="Cars"
+                           asp-action="Index"
+                           class="cancel-button">
+
+                            Cancel
+
+                        </a>
+
+
+                        <button type="submit"
+                                class="save-button">
+
+                            Save Changes
+
+                            <span>
+                                →
+                            </span>
+
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+
+            </section>
+
+
+        </div>
+
+
+    </main>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js">
+    </script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">
+    </script>
+
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js">
+    </script>
+
+
+</body>
+
+</html>

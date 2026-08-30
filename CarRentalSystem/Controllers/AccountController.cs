@@ -1,11 +1,12 @@
 ﻿using CarRentalSystem.Data;
 using CarRentalSystem.Models;
 using CarRentalSystem.ViewModels;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 
 namespace CarRentalSystem.Controllers
@@ -165,6 +166,168 @@ namespace CarRentalSystem.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Login", "Account");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var userIdClaim =
+                User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!int.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            var user = await _context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var model = new ProfileViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                DateOfBirth = user.DateOfBirth,
+                AddressLine1 = user.AddressLine1,
+                AddressLine2 = user.AddressLine2,
+                City = user.City,
+                Country = user.Country,
+                DriversLicenseNumber = user.DriversLicenseNumber
+            };
+
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Profile(ProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userIdClaim =
+                User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!int.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var normalizedEmail =
+                model.Email.Trim().ToLower();
+
+            var emailExists = await _context.Users
+                .AnyAsync(u =>
+                    u.Email == normalizedEmail &&
+                    u.Id != userId);
+
+            if (emailExists)
+            {
+                ModelState.AddModelError(
+                    nameof(model.Email),
+                    "An account with this email already exists.");
+
+                return View(model);
+            }
+
+            user.FirstName = model.FirstName.Trim();
+            user.LastName = model.LastName.Trim();
+            user.Email = normalizedEmail;
+            user.PhoneNumber = model.PhoneNumber.Trim();
+            user.DateOfBirth = model.DateOfBirth;
+            user.AddressLine1 = model.AddressLine1.Trim();
+            user.AddressLine2 = model.AddressLine2?.Trim();
+            user.City = model.City.Trim();
+            user.Country = model.Country.Trim();
+            user.DriversLicenseNumber =
+                model.DriversLicenseNumber.Trim();
+
+            await _context.SaveChangesAsync();
+
+            TempData["ProfileSuccess"] =
+                "Your profile has been updated successfully.";
+
+            return RedirectToAction(nameof(Profile));
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(
+    ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userIdClaim =
+                User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!int.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var passwordResult =
+                _passwordHasher.VerifyHashedPassword(
+                    user,
+                    user.PasswordHash,
+                    model.CurrentPassword);
+
+            if (passwordResult == PasswordVerificationResult.Failed)
+            {
+                ModelState.AddModelError(
+                    nameof(model.CurrentPassword),
+                    "Current password is incorrect.");
+
+                return View(model);
+            }
+
+            user.PasswordHash =
+                _passwordHasher.HashPassword(
+                    user,
+                    model.NewPassword);
+
+            await _context.SaveChangesAsync();
+
+            TempData["PasswordSuccess"] =
+                "Your password has been changed successfully.";
+
+            return RedirectToAction(nameof(ChangePassword));
         }
     }
 }
