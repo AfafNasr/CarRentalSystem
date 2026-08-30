@@ -1,0 +1,543 @@
+﻿@model CarRentalSystem.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Create Account";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Create Account - CarRental</title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/register.css"
+          asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="register-page">
+
+        <!-- LEFT SIDE -->
+        <section class="hero-section">
+
+            <div class="hero-overlay"></div>
+
+            <div class="brand">
+                <div class="brand-icon">
+                    🚘
+                </div>
+
+                <div>
+                    <h2>Drive<span>Ease</span></h2>
+                    <p>PREMIUM CAR RENTAL</p>
+                </div>
+            </div>
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    YOUR JOURNEY STARTS HERE
+                </span>
+
+                <h1>
+                    Find Your Car.<br />
+                    <span>Start Your Journey.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Create your account and discover the perfect
+                    vehicle for every journey.
+                </p>
+
+                <div class="features">
+
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <div>
+                            <strong>Trusted & Secure</strong>
+                            <p>Your information is always protected.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🚗</div>
+                        <div>
+                            <strong>Premium Cars</strong>
+                            <p>Choose from a wide range of vehicles.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <div>
+                            <strong>Easy Booking</strong>
+                            <p>Find and reserve your car in minutes.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT SIDE -->
+        <section class="form-section">
+
+            <div class="register-card">
+
+                <div class="form-header">
+
+                    <div class="form-icon">
+                        🚘
+                    </div>
+
+                    <h2>Create Your Account</h2>
+
+                    <p>
+                        Join us and start your next journey.
+                    </p>
+
+                </div>
+
+
+                <form asp-controller="Account"
+                      asp-action="Register"
+                      method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="validation-summary">
+                    </div>
+
+
+                    <!-- Name -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label asp-for="FirstName"></label>
+
+                            <input asp-for="FirstName"
+                                   class="form-control custom-input"
+                                   placeholder="Enter first name" />
+
+                            <span asp-validation-for="FirstName"
+                                  class="validation-message"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="LastName"></label>
+
+                            <input asp-for="LastName"
+                                   class="form-control custom-input"
+                                   placeholder="Enter last name" />
+
+                            <span asp-validation-for="LastName"
+                                  class="validation-message"></span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="form-group">
+
+                        <label asp-for="Email"></label>
+
+                        <input asp-for="Email"
+                               class="form-control custom-input"
+                               placeholder="example@email.com" />
+
+                        <span asp-validation-for="Email"
+                              class="validation-message"></span>
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group">
+
+                        <label asp-for="Password"></label>
+
+                        <input asp-for="Password"
+                               id="passwordInput"
+                               class="form-control custom-input"
+                               placeholder="Create a password" />
+
+                        <div class="password-strength">
+
+                            <div class="strength-track">
+                                <div id="passwordStrengthBar"
+                                     class="strength-bar">
+                                </div>
+                            </div>
+
+                            <span id="passwordStrengthText"
+                                  class="strength-text">
+                                Password strength
+                            </span>
+
+                        </div>
+
+                        <div class="password-rules">
+                            <span id="ruleLength">✓ 8+ characters</span>
+                            <span id="ruleUpper">✓ Uppercase</span>
+                            <span id="ruleLower">✓ Lowercase</span>
+                            <span id="ruleNumber">✓ Number</span>
+                            <span id="ruleSpecial">✓ Special character</span>
+                        </div>
+
+                        <span asp-validation-for="Password"
+                              class="validation-message"></span>
+
+                    </div>
+
+
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+
+                        <label asp-for="ConfirmPassword"></label>
+
+                        <input asp-for="ConfirmPassword"
+                               class="form-control custom-input"
+                               placeholder="Confirm your password" />
+
+                        <span asp-validation-for="ConfirmPassword"
+                              class="validation-message"></span>
+
+                    </div>
+
+
+                    <!-- Phone + DOB -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label asp-for="PhoneNumber"></label>
+
+                            <input asp-for="PhoneNumber"
+                                   class="form-control custom-input"
+                                   placeholder="+970 59 XXX XXXX" />
+
+                            <span asp-validation-for="PhoneNumber"
+                                  class="validation-message"></span>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label asp-for="DateOfBirth"></label>
+
+                            <input asp-for="DateOfBirth"
+                                   class="form-control custom-input" />
+
+                            <span asp-validation-for="DateOfBirth"
+                                  class="validation-message"></span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Address -->
+                    <div class="form-group">
+
+                        <label asp-for="AddressLine1"></label>
+
+                        <input asp-for="AddressLine1"
+                               class="form-control custom-input"
+                               placeholder="Street, building..." />
+
+                        <span asp-validation-for="AddressLine1"
+                              class="validation-message"></span>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label asp-for="AddressLine2">
+                            Address Line 2
+                            <span class="optional">(Optional)</span>
+                        </label>
+
+                        <input asp-for="AddressLine2"
+                               class="form-control custom-input"
+                               placeholder="Apartment, floor..." />
+
+                        <span asp-validation-for="AddressLine2"
+                              class="validation-message"></span>
+
+                    </div>
+
+
+                    <!-- City + Country -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label asp-for="City"></label>
+
+                            <input asp-for="City"
+                                   class="form-control custom-input"
+                                   placeholder="City" />
+
+                            <span asp-validation-for="City"
+                                  class="validation-message"></span>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label asp-for="Country"></label>
+
+                            <select asp-for="Country"
+                                    class="form-select custom-input">
+
+                                <option value="">
+                                    Select country
+                                </option>
+
+                                <option value="Palestine">
+                                    Palestine
+                                </option>
+
+                                <option value="Jordan">
+                                    Jordan
+                                </option>
+
+                                <option value="Saudi Arabia">
+                                    Saudi Arabia
+                                </option>
+
+                                <option value="United Arab Emirates">
+                                    United Arab Emirates
+                                </option>
+
+                                <option value="Egypt">
+                                    Egypt
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="Country"
+                                  class="validation-message"></span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- License -->
+                    <div class="form-group">
+
+                        <label asp-for="DriversLicenseNumber"></label>
+
+                        <input asp-for="DriversLicenseNumber"
+                               class="form-control custom-input"
+                               placeholder="Enter license number" />
+
+                        <span asp-validation-for="DriversLicenseNumber"
+                              class="validation-message"></span>
+
+                    </div>
+
+
+                    <button type="submit"
+                            class="register-button">
+
+                        Create Account
+
+                        <span>→</span>
+
+                    </button>
+
+
+                    <div class="login-link">
+
+                        Already have an account?
+
+                        <a asp-controller="Account"
+                           asp-action="Login">
+                            Sign in
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+
+    <script>
+
+            const passwordInput =
+                document.getElementById("passwordInput");
+
+            const strengthBar =
+                document.getElementById("passwordStrengthBar");
+
+            const strengthText =
+                document.getElementById("passwordStrengthText");
+
+
+            const ruleLength =
+                document.getElementById("ruleLength");
+
+            const ruleUpper =
+                document.getElementById("ruleUpper");
+
+            const ruleLower =
+                document.getElementById("ruleLower");
+
+            const ruleNumber =
+                document.getElementById("ruleNumber");
+
+            const ruleSpecial =
+                document.getElementById("ruleSpecial");
+
+
+            passwordInput.addEventListener("input", function() {
+
+                const password = passwordInput.value;
+
+                const rules = {
+
+                    length:
+                        password.length >= 8,
+
+                    upper:
+                        /[A-Z]/.test(password),
+
+                    lower:
+                        /[a-z]/.test(password),
+
+                    number:
+                        /[0-9]/.test(password),
+
+                    special:
+                        /[^A-Za-z0-9]/.test(password)
+                };
+
+
+                updateRule(
+                    ruleLength,
+                    rules.length
+                );
+
+                updateRule(
+                    ruleUpper,
+                    rules.upper
+                );
+
+                updateRule(
+                    ruleLower,
+                    rules.lower
+                );
+
+                updateRule(
+                    ruleNumber,
+                    rules.number
+                );
+
+                updateRule(
+                    ruleSpecial,
+                    rules.special
+                );
+
+
+                const score =
+                    Object.values(rules)
+                        .filter(Boolean)
+                        .length;
+
+
+                const percentage =
+                    score * 20;
+
+
+                strengthBar.style.width =
+                    percentage + "%";
+
+
+                if (password.length === 0) {
+
+                    strengthText.textContent =
+                        "Password strength";
+
+                    strengthBar.className =
+                        "strength-bar";
+
+                }
+                else if (score <= 2) {
+
+                    strengthText.textContent =
+                        "Weak password";
+
+                    strengthBar.className =
+                        "strength-bar weak";
+
+                }
+                else if (score <= 4) {
+
+                    strengthText.textContent =
+                        "Medium password";
+
+                    strengthBar.className =
+                        "strength-bar medium";
+
+                }
+                else {
+
+                    strengthText.textContent =
+                        "Strong password";
+
+                    strengthBar.className =
+                        "strength-bar strong";
+
+                }
+
+            });
+
+
+            function updateRule(element, valid) {
+
+                if (valid) {
+
+                    element.classList.add("valid");
+
+                }
+                else {
+
+                    element.classList.remove("valid");
+
+                }
+
+            }
+
+    </script>
+
+</body>
+</html>

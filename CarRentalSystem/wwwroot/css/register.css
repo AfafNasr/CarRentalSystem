@@ -1,0 +1,495 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+body {
+    min-height: 100vh;
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.register-page {
+    display: grid;
+    grid-template-columns: 42% 58%;
+    min-height: 100vh;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero-section {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 42%;
+    height: 100vh;
+    padding: 48px 55px;
+    color: white;
+    background: url("/images/cars/register-car.jpg") center center / cover no-repeat;
+    overflow: hidden;
+}
+
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient( 135deg, rgba(4, 13, 28, 0.96), rgba(5, 19, 40, 0.79), rgba(5, 17, 33, 0.55) );
+}
+
+
+.brand {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.brand-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(255, 183, 66, 0.12);
+    border: 1px solid rgba(255, 183, 66, 0.45);
+    font-size: 25px;
+}
+
+
+.brand h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+
+    .brand h2 span {
+        color: #e8a93d;
+    }
+
+
+.brand p {
+    margin: 4px 0 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+    margin-top: 15vh;
+}
+
+
+.hero-label {
+    color: #e8a93d;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+
+.hero-content h1 {
+    margin: 18px 0 22px;
+    font-size: clamp(42px, 4vw, 65px);
+    line-height: 1.05;
+    font-weight: 700;
+}
+
+
+    .hero-content h1 span {
+        color: #e8a93d;
+    }
+
+
+.hero-description {
+    max-width: 440px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 45px;
+}
+
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+
+.feature-icon {
+    min-width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(232, 169, 61, 0.12);
+    border: 1px solid rgba(232, 169, 61, 0.28);
+    color: #e8a93d;
+}
+
+
+.feature strong {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 14px;
+}
+
+
+.feature p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 13px;
+}
+
+
+/* =========================================
+   FORM AREA
+========================================= */
+
+.form-section {
+    grid-column: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 40px;
+    background: linear-gradient( 145deg, #f8fafc, #eef2f7 );
+}
+
+
+.register-card {
+    width: 100%;
+    max-width: 760px;
+    padding: 48px 55px;
+    border-radius: 24px;
+    background: white;
+    box-shadow: 0 25px 60px rgba(15, 30, 55, 0.10);
+    border: 1px solid rgba(15, 30, 55, 0.07);
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.form-header {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+
+.form-icon {
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: #0d1b2f;
+    font-size: 28px;
+}
+
+
+.form-header h2 {
+    margin-bottom: 8px;
+    color: #101b2e;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+
+.form-header p {
+    margin: 0;
+    color: #7a8496;
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #202b3c;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+
+.optional {
+    color: #98a1b1;
+    font-weight: 400;
+}
+
+
+.custom-input {
+    min-height: 52px;
+    padding: 13px 15px;
+    border: 1px solid #dfe4eb;
+    border-radius: 11px;
+    background: #fbfcfd;
+    color: #182337;
+    font-size: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+
+    .custom-input:focus {
+        background: white;
+        border-color: #d7a448;
+        box-shadow: 0 0 0 4px rgba(215, 164, 72, 0.11);
+        outline: none;
+    }
+
+
+    .custom-input::placeholder {
+        color: #adb5c2;
+    }
+
+
+/* =========================================
+   PASSWORD STRENGTH
+========================================= */
+
+.password-strength {
+    margin-top: 10px;
+}
+
+
+.strength-track {
+    width: 100%;
+    height: 6px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #e9edf2;
+}
+
+
+.strength-bar {
+    width: 0;
+    height: 100%;
+    border-radius: 20px;
+    background: #d8dde5;
+    transition: width 0.25s ease, background-color 0.25s ease;
+}
+
+
+    .strength-bar.weak {
+        background: #dc3545;
+    }
+
+
+    .strength-bar.medium {
+        background: #e5a42c;
+    }
+
+
+    .strength-bar.strong {
+        background: #31a65a;
+    }
+
+
+.strength-text {
+    display: block;
+    margin-top: 7px;
+    color: #7c8594;
+    font-size: 12px;
+}
+
+
+.password-rules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px 15px;
+    margin-top: 10px;
+}
+
+
+    .password-rules span {
+        color: #a0a8b5;
+        font-size: 11px;
+        transition: color 0.2s ease;
+    }
+
+
+        .password-rules span.valid {
+            color: #299f54;
+        }
+
+
+/* =========================================
+   VALIDATION
+========================================= */
+
+.validation-message {
+    display: block;
+    margin-top: 5px;
+    color: #dc3545;
+    font-size: 12px;
+}
+
+
+.validation-summary {
+    margin-bottom: 15px;
+    color: #dc3545;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.register-button {
+    width: 100%;
+    height: 55px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 11px;
+    background: linear-gradient( 135deg, #d69a32, #ebb84e );
+    color: #111b29;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+    .register-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(215, 164, 72, 0.30);
+    }
+
+
+    .register-button span {
+        font-size: 19px;
+    }
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+.login-link {
+    margin-top: 22px;
+    text-align: center;
+    color: #7d8797;
+    font-size: 13px;
+}
+
+
+    .login-link a {
+        margin-left: 4px;
+        color: #ce9130;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .register-page {
+        display: block;
+    }
+
+    .hero-section {
+        position: relative;
+        width: 100%;
+        height: 430px;
+        padding: 35px;
+    }
+
+    .hero-content {
+        margin-top: 70px;
+    }
+
+    .features {
+        display: none;
+    }
+
+    .form-section {
+        padding: 35px 20px;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .hero-section {
+        height: 360px;
+        padding: 25px;
+    }
+
+    .hero-content h1 {
+        font-size: 40px;
+    }
+
+    .register-card {
+        padding: 35px 22px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .form-header h2 {
+        font-size: 27px;
+    }
+}
