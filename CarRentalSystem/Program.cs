@@ -1,12 +1,18 @@
 using CarRentalSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
-
+using CarRentalSystem.Services;
+using CarRentalSystem.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddDbContext<CarRentalDbContext>(options =>
     options.UseSqlServer(

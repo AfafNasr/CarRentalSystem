@@ -33,5 +33,8 @@
         public bool IsActive { get; set; } = true;
         public ICollection<Reservation> Reservations { get; set; }
             = new List<Reservation>();
+
+        public ICollection<PasswordResetToken> PasswordResetTokens { get; set; }
+    = new List<PasswordResetToken>();
     }
 }

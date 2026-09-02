@@ -1,5 +1,6 @@
 ﻿using CarRentalSystem.Data;
 using CarRentalSystem.Models;
+using CarRentalSystem.Services;
 using CarRentalSystem.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -8,6 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace CarRentalSystem.Controllers
 {
@@ -15,11 +19,170 @@ namespace CarRentalSystem.Controllers
     {
         private readonly CarRentalDbContext _context;
         private readonly PasswordHasher<User> _passwordHasher;
+        private readonly IEmailService _emailService;
 
-        public AccountController(CarRentalDbContext context)
+        public AccountController(CarRentalDbContext context, IEmailService emailService)
         {
             _context = context;
             _passwordHasher = new PasswordHasher<User>();
+            _emailService = emailService;
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return BadRequest();
+            }
+
+            var viewModel =
+                new ResetPasswordViewModel
+                {
+                    Token = token
+                };
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(
+    ForgotPasswordViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var normalizedEmail =
+                viewModel.Email.Trim().ToLower();
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u =>
+                    u.Email == normalizedEmail);
+
+            if (user != null)
+            {
+                var oldTokens =
+                    await _context.PasswordResetTokens
+                        .Where(t =>
+                            t.UserId == user.Id &&
+                            !t.IsUsed)
+                        .ToListAsync();
+
+                foreach (var oldToken in oldTokens)
+                {
+                    oldToken.IsUsed = true;
+                }
+
+                var tokenBytes =
+                    RandomNumberGenerator.GetBytes(32);
+
+                var token =
+                    WebEncoders.Base64UrlEncode(tokenBytes);
+
+                var tokenHash =
+                    Convert.ToHexString(
+                        SHA256.HashData(
+                            Encoding.UTF8.GetBytes(token)));
+
+                var passwordResetToken =
+                    new PasswordResetToken
+                    {
+                        UserId = user.Id,
+
+                        TokenHash = tokenHash,
+
+                        ExpiresAt =
+                            DateTime.UtcNow.AddMinutes(30)
+                    };
+
+                _context.PasswordResetTokens
+                    .Add(passwordResetToken);
+
+                await _context.SaveChangesAsync();
+
+                var resetLink =
+                    Url.Action(
+                        nameof(ResetPassword),
+                        "Account",
+                        new { token },
+                        Request.Scheme);
+
+                if (!string.IsNullOrWhiteSpace(resetLink))
+                {
+                    await _emailService
+                        .SendPasswordResetEmailAsync(
+                            user.Email,
+                            resetLink);
+                }
+            }
+
+            TempData["PasswordResetMessage"] =
+                "If an account exists with this email, " +
+                "a password reset link has been sent.";
+
+            return RedirectToAction(nameof(ForgotPassword));
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(
+    ResetPasswordViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var tokenHash =
+                Convert.ToHexString(
+                    SHA256.HashData(
+                        Encoding.UTF8.GetBytes(
+                            viewModel.Token)));
+
+            var resetToken =
+                await _context.PasswordResetTokens
+                    .Include(t => t.User)
+                    .FirstOrDefaultAsync(t =>
+                        t.TokenHash == tokenHash &&
+                        !t.IsUsed);
+
+            if (resetToken == null ||
+                resetToken.ExpiresAt <= DateTime.UtcNow)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "This password reset link is invalid or has expired.");
+
+                return View(viewModel);
+            }
+
+            var passwordHasher =
+                new PasswordHasher<User>();
+
+            resetToken.User.PasswordHash =
+                passwordHasher.HashPassword(
+                    resetToken.User,
+                    viewModel.NewPassword);
+
+            resetToken.IsUsed = true;
+
+            await _context.SaveChangesAsync();
+
+            TempData["LoginSuccess"] =
+                "Your password has been reset successfully. " +
+                "You can now sign in with your new password.";
+
+            return RedirectToAction(nameof(Login));
         }
 
         [HttpGet]

@@ -16,6 +16,8 @@ namespace CarRentalSystem.Data
 
         public DbSet<Reservation> Reservations { get; set; }
 
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -23,6 +25,12 @@ namespace CarRentalSystem.Data
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
+            modelBuilder.Entity<PasswordResetToken>()
+    .HasOne(t => t.User)
+    .WithMany(u => u.PasswordResetTokens)
+    .HasForeignKey(t => t.UserId)
+    .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>().HasData(
     new User
