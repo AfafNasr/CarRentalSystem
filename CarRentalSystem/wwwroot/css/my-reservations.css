@@ -329,3 +329,44 @@ nav {
         grid-template-columns: 1fr;
     }
 }
+.reservation-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+    .reservation-actions form {
+        margin: 0;
+    }
+
+.edit-reservation-button,
+.cancel-reservation-user-button {
+    display: inline-block;
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.edit-reservation-button {
+    background: #edf2f8;
+    color: #294864;
+    text-decoration: none;
+}
+
+.cancel-reservation-user-button {
+    border: none;
+    background: #fde8e8;
+    color: #c43e3e;
+    cursor: pointer;
+}
+.success-alert {
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: #e8f7ee;
+    color: #187846;
+    font-size: 12px;
+    font-weight: 600;
+}

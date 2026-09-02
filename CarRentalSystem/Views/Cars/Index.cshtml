@@ -577,27 +577,19 @@
                                      CURRENT RESERVATION INFO
                                 ========================== -->
                                 @if (!item.IsAvailableNow &&
-                                                                    item.AvailableFrom.HasValue)
+     item.AvailableFrom is DateTime availableFrom)
                                 {
-
                                     <div class="current-reservation-info">
 
                                         <span>
                                             Currently reserved
                                         </span>
 
-
                                         <strong>
-
-                                            Available from
-
-                                            @item.AvailableFrom.Value
-                                            .ToString("dd MMM yyyy")
-
+                                            Available from @availableFrom.ToString("dd MMM yyyy")
                                         </strong>
 
                                     </div>
-
                                 }
 
 

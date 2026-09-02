@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CarRentalSystem.Models.Reservation>
+﻿@using CarRentalSystem.Models
+@model IEnumerable<CarRentalSystem.Models.Reservation>
 
 @{
     ViewData["Title"] = "My Reservations";
@@ -95,6 +96,12 @@
     <main class="page-container">
 
         <div class="page-heading">
+            @if (TempData["ReservationSuccess"] != null)
+            {
+                <div class="success-alert">
+                    @TempData["ReservationSuccess"]
+                </div>
+            }
 
             <span>
                 YOUR JOURNEYS
@@ -109,6 +116,7 @@
             </p>
 
         </div>
+
 
 
         @if (!Model.Any())
@@ -238,6 +246,39 @@
                                 </div>
 
                             </div>
+
+
+                            @if (reservation.Status != ReservationStatus.Cancelled &&
+     reservation.Status != ReservationStatus.Completed)
+                            {
+                                <div class="reservation-actions">
+
+                                    <a asp-controller="Reservations"
+                                       asp-action="Edit"
+                                       asp-route-id="@reservation.Id"
+                                       class="edit-reservation-button">
+
+                                        Edit
+
+                                    </a>
+
+                                    <form asp-controller="Reservations"
+                                          asp-action="Cancel"
+                                          asp-route-id="@reservation.Id"
+                                          method="post"
+                                          onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+
+                                        <button type="submit"
+                                                class="cancel-reservation-user-button">
+
+                                            Cancel
+
+                                        </button>
+
+                                    </form>
+
+                                </div>
+                            }
 
                         </div>
 

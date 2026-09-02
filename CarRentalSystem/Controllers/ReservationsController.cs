@@ -202,5 +202,209 @@ namespace CarRentalSystem.Controllers
 
             return View(reservations);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var userIdClaim =
+                User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+
+            var userId = int.Parse(userIdClaim.Value);
+
+            var reservation = await _context.Reservations
+                .AsNoTracking()
+                .Include(r => r.Car)
+                .FirstOrDefaultAsync(r =>
+                    r.Id == id &&
+                    r.UserId == userId);
+
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            if (reservation.Status == ReservationStatus.Cancelled ||
+                reservation.Status == ReservationStatus.Completed)
+            {
+                return BadRequest();
+            }
+
+
+            var rentalDays =
+                (reservation.ReturnDate.Date -
+                 reservation.PickupDate.Date).Days;
+
+            var viewModel = new EditReservationViewModel
+            {
+                ReservationId = reservation.Id,
+
+                CarName =
+                    reservation.Car.Brand + " " +
+                    reservation.Car.Model,
+
+                DailyRate =
+                    reservation.Car.DailyRate,
+
+                PickupDate =
+                    reservation.PickupDate,
+
+                ReturnDate =
+                    reservation.ReturnDate,
+
+                RentalDays =
+                    rentalDays,
+
+                TotalPrice =
+                    reservation.TotalPrice
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(
+    EditReservationViewModel viewModel)
+        {
+            var userIdClaim =
+                User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+
+            var userId = int.Parse(userIdClaim.Value);
+
+            var reservation = await _context.Reservations
+                .Include(r => r.Car)
+                .FirstOrDefaultAsync(r =>
+                    r.Id == viewModel.ReservationId &&
+                    r.UserId == userId);
+
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            if (reservation.Status == ReservationStatus.Cancelled ||
+                reservation.Status == ReservationStatus.Completed)
+            {
+                return BadRequest();
+            }
+
+
+            if (viewModel.PickupDate.Date < DateTime.Today)
+            {
+                ModelState.AddModelError(
+                    nameof(viewModel.PickupDate),
+                    "Pickup date cannot be in the past.");
+            }
+
+            if (viewModel.ReturnDate.Date <=
+                viewModel.PickupDate.Date)
+            {
+                ModelState.AddModelError(
+                    nameof(viewModel.ReturnDate),
+                    "Return date must be after pickup date.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var hasOverlap =
+                    await _context.Reservations
+                        .AnyAsync(r =>
+                            r.CarId == reservation.CarId &&
+                            r.Id != reservation.Id &&
+                            r.Status != ReservationStatus.Cancelled &&
+                            r.PickupDate < viewModel.ReturnDate &&
+                            r.ReturnDate > viewModel.PickupDate);
+
+                if (hasOverlap)
+                {
+                    ModelState.AddModelError(
+                        string.Empty,
+                        "The car is already reserved during the selected dates.");
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                viewModel.CarName =
+                    reservation.Car.Brand + " " +
+                    reservation.Car.Model;
+
+                viewModel.DailyRate =
+                    reservation.Car.DailyRate;
+
+                return View(viewModel);
+            }
+
+            var rentalDays =
+                (viewModel.ReturnDate.Date -
+                 viewModel.PickupDate.Date).Days;
+
+            reservation.PickupDate =
+                viewModel.PickupDate.Date;
+
+            reservation.ReturnDate =
+                viewModel.ReturnDate.Date;
+
+            reservation.TotalPrice =
+                rentalDays * reservation.Car.DailyRate;
+
+            await _context.SaveChangesAsync();
+
+            TempData["ReservationSuccess"] =
+                "Reservation updated successfully.";
+
+            return RedirectToAction(nameof(MyReservations));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Cancel(int id)
+        {
+            var userIdClaim =
+                User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+
+            var userId = int.Parse(userIdClaim.Value);
+
+            var reservation = await _context.Reservations
+                .FirstOrDefaultAsync(r =>
+                    r.Id == id &&
+                    r.UserId == userId);
+
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            if (reservation.Status == ReservationStatus.Cancelled ||
+                reservation.Status == ReservationStatus.Completed)
+            {
+                return BadRequest();
+            }
+
+            reservation.Status =
+                ReservationStatus.Cancelled;
+
+            await _context.SaveChangesAsync();
+
+            TempData["ReservationSuccess"] =
+                "Reservation cancelled successfully.";
+
+            return RedirectToAction(nameof(MyReservations));
+        }
     }
 }

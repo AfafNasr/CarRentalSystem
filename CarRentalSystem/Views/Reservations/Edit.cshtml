@@ -1,0 +1,308 @@
+﻿@model CarRentalSystem.ViewModels.EditReservationViewModel
+
+@{
+    ViewData["Title"] = "Edit Reservation";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Edit Reservation - DriveEase</title>
+
+    <link rel="stylesheet"
+          href="~/css/cars.css"
+          asp-append-version="true" />
+
+</head>
+
+<body>
+
+    <header class="site-header">
+
+        <div class="container header-content">
+
+            <a asp-controller="Cars"
+               asp-action="Index"
+               class="logo">
+
+                Drive<span>Ease</span>
+
+            </a>
+
+            <nav>
+
+                <a asp-controller="Cars"
+                   asp-action="Index">
+                    Cars
+                </a>
+
+                <a asp-controller="Reservations"
+                   asp-action="MyReservations">
+                    My Reservations
+                </a>
+
+                <a asp-controller="Account"
+                   asp-action="Profile">
+                    Profile
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main class="edit-reservation-page">
+
+        <div class="edit-reservation-card">
+
+            <div class="edit-reservation-heading">
+
+                <span>
+                    RESERVATION MANAGEMENT
+                </span>
+
+                <h1>
+                    Edit Reservation
+                </h1>
+
+                <p>
+                    Change your rental dates for
+                    <strong>@Model.CarName</strong>.
+                </p>
+
+            </div>
+
+
+            <form asp-controller="Reservations"
+                  asp-action="Edit"
+                  method="post">
+
+                <input asp-for="ReservationId"
+                       type="hidden" />
+
+                <div asp-validation-summary="All"
+                     class="validation-summary">
+                </div>
+
+
+                <div class="reservation-edit-car">
+
+                    <span>
+                        CAR
+                    </span>
+
+                    <strong>
+                        @Model.CarName
+                    </strong>
+
+                    <small>
+                        $@Model.DailyRate.ToString("0.00") / day
+                    </small>
+
+                </div>
+
+
+                <div class="edit-reservation-grid">
+
+                    <div class="edit-field">
+
+                        <label asp-for="PickupDate">
+                        </label>
+
+                        <input asp-for="PickupDate"
+                               id="pickupDate"
+                               type="date" />
+
+                        <span asp-validation-for="PickupDate"
+                              class="validation-message">
+                        </span>
+
+                    </div>
+
+
+                    <div class="edit-field">
+
+                        <label asp-for="ReturnDate">
+                        </label>
+
+                        <input asp-for="ReturnDate"
+                               id="returnDate"
+                               type="date" />
+
+                        <span asp-validation-for="ReturnDate"
+                              class="validation-message">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="edit-price-summary">
+
+                    <div>
+
+                        <span>
+                            Daily Rate
+                        </span>
+
+                        <strong>
+                            $@Model.DailyRate.ToString("0.00")
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Rental Days
+                        </span>
+
+                        <strong id="rentalDays">
+                            @Model.RentalDays
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Estimated Total
+                        </span>
+
+                        <strong id="totalPrice">
+                            $@Model.TotalPrice.ToString("0.00")
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="edit-reservation-note">
+
+                    The system will verify the car's availability
+                    again before saving your changes.
+
+                </div>
+
+
+                <div class="edit-reservation-actions">
+
+                    <a asp-controller="Reservations"
+                       asp-action="MyReservations"
+                       class="cancel-edit-button">
+
+                        Back
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="save-reservation-button">
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+            const pickup =
+                document.getElementById("pickupDate");
+
+            const returned =
+                document.getElementById("returnDate");
+
+            const rentalDays =
+                document.getElementById("rentalDays");
+
+            const totalPrice =
+                document.getElementById("totalPrice");
+
+            const dailyRate =
+                    @Model.DailyRate.ToString(
+                            System.Globalization.CultureInfo.InvariantCulture);
+
+
+            function calculatePrice() {
+
+                if (!pickup.value ||
+                    !returned.value) {
+
+                    rentalDays.textContent = "—";
+                    totalPrice.textContent = "—";
+
+                    return;
+                }
+
+                const pickupDate =
+                    new Date(pickup.value);
+
+                const returnDate =
+                    new Date(returned.value);
+
+                if (returnDate <= pickupDate) {
+
+                    rentalDays.textContent = "—";
+                    totalPrice.textContent = "—";
+
+                    return;
+                }
+
+                const millisecondsPerDay =
+                    1000 * 60 * 60 * 24;
+
+                const days =
+                    Math.round(
+                        (returnDate - pickupDate)
+                        / millisecondsPerDay
+                    );
+
+                rentalDays.textContent =
+                    days;
+
+                totalPrice.textContent =
+                    "$" +
+                    (days * dailyRate).toFixed(2);
+            }
+
+
+            pickup.addEventListener(
+                "change",
+                calculatePrice);
+
+            returned.addEventListener(
+                "change",
+                calculatePrice);
+
+    </script>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+
+</html>
