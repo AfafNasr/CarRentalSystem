@@ -1,0 +1,258 @@
+﻿@model CarRentalSystem.ViewModels.AdminCustomerFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Customer";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Edit Customer - DriveEase Admin</title>
+
+    <link rel="stylesheet"
+          href="~/css/admin.css"
+          asp-append-version="true" />
+</head>
+
+<body>
+
+    <header class="admin-header">
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="brand">
+
+            <span class="brand-icon">🚘</span>
+
+            <div>
+                <h2>Drive<span>Ease</span></h2>
+                <small>ADMIN PANEL</small>
+            </div>
+
+        </a>
+
+        <div class="admin-user">
+
+            <div>
+                <span>Administrator</span>
+                <strong>@User.Identity?.Name</strong>
+            </div>
+
+            <form asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                <button type="submit"
+                        class="logout-button">
+                    Logout
+                </button>
+
+            </form>
+
+        </div>
+
+    </header>
+
+
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+
+            <a asp-controller="Admin"
+               asp-action="Index">
+                Dashboard
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Reservations">
+                Reservations
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Cars">
+                Cars
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Customers"
+               class="active">
+                Customers
+            </a>
+
+        </aside>
+
+
+        <main class="dashboard">
+
+            <div class="dashboard-heading">
+
+                <span>
+                    CUSTOMER MANAGEMENT
+                </span>
+
+                <h1>
+                    Edit Customer
+                </h1>
+
+                <p>
+                    Update customer account information.
+                </p>
+
+            </div>
+
+
+            <div class="form-card">
+
+                <form asp-controller="Admin"
+                      asp-action="EditCustomer"
+                      method="post">
+
+                    <input asp-for="Id"
+                           type="hidden" />
+
+                    <div asp-validation-summary="All"
+                         class="validation-summary">
+                    </div>
+
+
+                    <div class="admin-form-grid">
+
+                        <div class="admin-form-field">
+                            <label asp-for="FirstName"></label>
+                            <input asp-for="FirstName" />
+                            <span asp-validation-for="FirstName"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="admin-form-field">
+                            <label asp-for="LastName"></label>
+                            <input asp-for="LastName" />
+                            <span asp-validation-for="LastName"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="admin-form-field full-width">
+                            <label asp-for="Email"></label>
+                            <input asp-for="Email" />
+                            <span asp-validation-for="Email"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="admin-form-field">
+                            <label asp-for="PhoneNumber"></label>
+                            <input asp-for="PhoneNumber" />
+                            <span asp-validation-for="PhoneNumber"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="admin-form-field">
+                            <label asp-for="DateOfBirth"></label>
+                            <input asp-for="DateOfBirth"
+                                   type="date" />
+                            <span asp-validation-for="DateOfBirth"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="admin-form-field full-width">
+                            <label asp-for="AddressLine1"></label>
+                            <input asp-for="AddressLine1" />
+                            <span asp-validation-for="AddressLine1"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="admin-form-field full-width">
+                            <label asp-for="AddressLine2"></label>
+                            <input asp-for="AddressLine2" />
+                            <span asp-validation-for="AddressLine2"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="admin-form-field">
+                            <label asp-for="City"></label>
+                            <input asp-for="City" />
+                            <span asp-validation-for="City"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="admin-form-field">
+                            <label asp-for="Country"></label>
+
+                            <select asp-for="Country">
+                                <option value="">Select a country</option>
+                                <option value="Palestine">Palestine</option>
+                                <option value="Jordan">Jordan</option>
+                                <option value="Saudi Arabia">Saudi Arabia</option>
+                                <option value="United Arab Emirates">United Arab Emirates</option>
+                                <option value="Egypt">Egypt</option>
+                            </select>
+
+                            <span asp-validation-for="Country"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="admin-form-field full-width">
+                            <label asp-for="DriversLicenseNumber"></label>
+                            <input asp-for="DriversLicenseNumber" />
+                            <span asp-validation-for="DriversLicenseNumber"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="admin-form-field full-width">
+
+                            <label asp-for="Password">
+                                New Password
+                            </label>
+
+                            <input asp-for="Password"
+                                   type="password"
+                                   placeholder="Leave empty to keep current password" />
+
+                            <small class="field-help">
+                                Leave this field empty if you don't want to change the customer's password.
+                            </small>
+
+                            <span asp-validation-for="Password"
+                                  class="validation-message"></span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <a asp-controller="Admin"
+                           asp-action="Customers"
+                           class="cancel-button">
+                            Cancel
+                        </a>
+
+                        <button type="submit"
+                                class="save-button">
+                            Save Changes
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

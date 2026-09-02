@@ -1,0 +1,316 @@
+﻿@model CarRentalSystem.ViewModels.CarFormViewModel
+
+@{
+    ViewData["Title"] = "Add Car";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Add Car - DriveEase Admin</title>
+
+    <link rel="stylesheet"
+          href="~/css/admin.css"
+          asp-append-version="true" />
+
+</head>
+
+<body>
+
+    <header class="admin-header">
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="brand">
+
+            <span class="brand-icon">
+                🚘
+            </span>
+
+            <div>
+
+                <h2>
+                    Drive<span>Ease</span>
+                </h2>
+
+                <small>
+                    ADMIN PANEL
+                </small>
+
+            </div>
+
+        </a>
+
+        <div class="admin-user">
+
+            <div>
+                <span>Administrator</span>
+                <strong>@User.Identity?.Name</strong>
+            </div>
+
+            <form asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                <button type="submit"
+                        class="logout-button">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </header>
+
+
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+
+            <a asp-controller="Admin"
+               asp-action="Index">
+                Dashboard
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Reservations">
+                Reservations
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Cars"
+               class="active">
+                Cars
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Customers">
+                Customers
+            </a>
+
+        </aside>
+
+
+        <main class="dashboard">
+
+            <div class="dashboard-heading">
+
+                <span>
+                    CAR MANAGEMENT
+                </span>
+
+                <h1>
+                    Add New Car
+                </h1>
+
+                <p>
+                    Add a new vehicle to the rental fleet.
+                </p>
+
+            </div>
+
+
+            <div class="form-card">
+
+                <form asp-controller="Admin"
+                      asp-action="CreateCar"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <div asp-validation-summary="All"
+                         class="validation-summary">
+                    </div>
+
+
+                    <div class="admin-form-grid">
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="Brand"></label>
+
+                            <input asp-for="Brand" />
+
+                            <span asp-validation-for="Brand"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="Model"></label>
+
+                            <input asp-for="Model" />
+
+                            <span asp-validation-for="Model"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="Year"></label>
+
+                            <input asp-for="Year"
+                                   type="number" />
+
+                            <span asp-validation-for="Year"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="Type"></label>
+
+                            <select asp-for="Type"
+                                    asp-items="Html.GetEnumSelectList<CarRentalSystem.Models.CarType>()">
+                            </select>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="Transmission"></label>
+
+                            <select asp-for="Transmission"
+                                    asp-items="Html.GetEnumSelectList<CarRentalSystem.Models.TransmissionType>()">
+                            </select>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="FuelType"></label>
+
+                            <select asp-for="FuelType"
+                                    asp-items="Html.GetEnumSelectList<CarRentalSystem.Models.FuelType>()">
+                            </select>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="Seats"></label>
+
+                            <input asp-for="Seats"
+                                   type="number" />
+
+                            <span asp-validation-for="Seats"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="Color"></label>
+
+                            <input asp-for="Color" />
+
+                            <span asp-validation-for="Color"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="DailyRate"></label>
+
+                            <input asp-for="DailyRate"
+                                   type="number"
+                                   step="0.01" />
+
+                            <span asp-validation-for="DailyRate"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="Location"></label>
+
+                            <input asp-for="Location" />
+
+                            <span asp-validation-for="Location"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                        <div class="admin-form-field full-width">
+
+                            <label asp-for="ImageFile"></label>
+
+                            <input asp-for="ImageFile"
+                                   type="file"
+                                   accept="image/*" />
+
+                            <span asp-validation-for="ImageFile"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <a asp-controller="Admin"
+                           asp-action="Cars"
+                           class="cancel-button">
+
+                            Cancel
+
+                        </a>
+
+                        <button type="submit"
+                                class="save-button">
+
+                            Add Car
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

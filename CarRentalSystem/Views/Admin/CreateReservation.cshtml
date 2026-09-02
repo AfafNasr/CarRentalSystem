@@ -1,0 +1,453 @@
+﻿@model CarRentalSystem.ViewModels.AdminCreateReservationViewModel
+
+@{
+    ViewData["Title"] = "Create Reservation";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Create Reservation - DriveEase Admin</title>
+
+    <link rel="stylesheet"
+          href="~/css/admin.css"
+          asp-append-version="true" />
+
+</head>
+
+<body>
+
+
+    <header class="admin-header">
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="brand">
+
+            <span class="brand-icon">
+                🚘
+            </span>
+
+            <div>
+                <h2>
+                    Drive<span>Ease</span>
+                </h2>
+
+                <small>
+                    ADMIN PANEL
+                </small>
+            </div>
+
+        </a>
+
+
+        <div class="admin-user">
+
+            <div>
+                <span>
+                    Administrator
+                </span>
+
+                <strong>
+                    @User.Identity?.Name
+                </strong>
+            </div>
+
+
+            <form asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                <button type="submit"
+                        class="logout-button">
+                    Logout
+                </button>
+
+            </form>
+
+        </div>
+
+    </header>
+
+
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+
+            <a asp-controller="Admin"
+               asp-action="Index">
+                Dashboard
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Reservations"
+               class="active">
+                Reservations
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Cars">
+                Cars
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Customers">
+                Customers
+            </a>
+
+        </aside>
+
+
+        <main class="dashboard">
+
+
+            <div class="dashboard-heading">
+
+                <span>
+                    RESERVATION MANAGEMENT
+                </span>
+
+                <h1>
+                    Create Reservation
+                </h1>
+
+                <p>
+                    Create a reservation on behalf of a customer.
+                </p>
+
+            </div>
+
+
+            <div class="form-card">
+
+
+                <div class="reservation-customer-banner">
+
+                    <div class="customer-avatar large">
+                        @Model.CustomerName.Substring(0, 1).ToUpper()
+                    </div>
+
+
+                    <div>
+
+                        <small>
+                            RESERVATION FOR
+                        </small>
+
+                        <strong>
+                            @Model.CustomerName
+                        </strong>
+
+                        <span>
+                            @Model.CustomerEmail
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <form asp-controller="Admin"
+                      asp-action="CreateReservation"
+                      method="post">
+
+
+                    <input asp-for="UserId"
+                           type="hidden" />
+
+
+                    <div asp-validation-summary="All"
+                         class="validation-summary">
+                    </div>
+
+
+                    <div class="admin-form-grid">
+
+
+                        <div class="admin-form-field full-width">
+
+                            <label asp-for="CarId">
+                                Car
+                            </label>
+
+
+                            <select asp-for="CarId"
+                                    id="carSelect">
+
+                                <option value="">
+                                    Select a car
+                                </option>
+
+
+                                @foreach (var car in Model.Cars)
+                                {
+                                    <option value="@car.Id"
+                                            data-rate="@car.DailyRate"
+                                            data-location="@car.Location">
+
+                                        @car.Name
+                                        — @car.Location
+                                        — $@car.DailyRate/day
+
+                                    </option>
+                                }
+
+                            </select>
+
+
+                            <span asp-validation-for="CarId"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="PickupDate">
+                            </label>
+
+                            <input asp-for="PickupDate"
+                                   id="pickupDate"
+                                   type="date" />
+
+                            <span asp-validation-for="PickupDate"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label asp-for="ReturnDate">
+                            </label>
+
+                            <input asp-for="ReturnDate"
+                                   id="returnDate"
+                                   type="date" />
+
+                            <span asp-validation-for="ReturnDate"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="reservation-price-summary">
+
+                        <div>
+
+                            <span>
+                                Daily Rate
+                            </span>
+
+                            <strong id="dailyRate">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Rental Days
+                            </span>
+
+                            <strong id="rentalDays">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Estimated Total
+                            </span>
+
+                            <strong id="totalPrice">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="reservation-note">
+
+                        Availability and final price are verified again
+                        by the server when the reservation is submitted.
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <a asp-controller="Admin"
+                           asp-action="Customers"
+                           class="cancel-button">
+
+                            Cancel
+
+                        </a>
+
+
+                        <button type="submit"
+                                class="save-button">
+
+                            Create Reservation
+
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+            const carSelect =
+                document.getElementById("carSelect");
+
+            const pickupDate =
+                document.getElementById("pickupDate");
+
+            const returnDate =
+                document.getElementById("returnDate");
+
+            const dailyRateElement =
+                document.getElementById("dailyRate");
+
+            const rentalDaysElement =
+                document.getElementById("rentalDays");
+
+            const totalPriceElement =
+                document.getElementById("totalPrice");
+
+
+            function updateReservationPrice() {
+
+                const selectedOption =
+                    carSelect.options[
+                    carSelect.selectedIndex
+                    ];
+
+                const rate =
+                    parseFloat(
+                        selectedOption?.dataset.rate
+                    );
+
+
+                const pickup =
+                    new Date(pickupDate.value);
+
+                const returned =
+                    new Date(returnDate.value);
+
+
+                if (isNaN(rate)) {
+
+                    dailyRateElement.textContent = "—";
+                    rentalDaysElement.textContent = "—";
+                    totalPriceElement.textContent = "—";
+
+                    return;
+                }
+
+
+                dailyRateElement.textContent =
+                    "$" + rate.toFixed(2);
+
+
+                if (!pickupDate.value ||
+                    !returnDate.value ||
+                    returned <= pickup) {
+
+                    rentalDaysElement.textContent = "—";
+                    totalPriceElement.textContent = "—";
+
+                    return;
+                }
+
+
+                const millisecondsPerDay =
+                    1000 * 60 * 60 * 24;
+
+
+                const days =
+                    Math.round(
+                        (returned - pickup)
+                        / millisecondsPerDay
+                    );
+
+
+                const total =
+                    days * rate;
+
+
+                rentalDaysElement.textContent =
+                    days;
+
+
+                totalPriceElement.textContent =
+                    "$" + total.toFixed(2);
+
+            }
+
+
+            carSelect.addEventListener(
+                "change",
+                updateReservationPrice
+            );
+
+
+            pickupDate.addEventListener(
+                "change",
+                updateReservationPrice
+            );
+
+
+            returnDate.addEventListener(
+                "change",
+                updateReservationPrice
+            );
+
+
+            updateReservationPrice();
+
+    </script>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+
+</body>
+
+</html>

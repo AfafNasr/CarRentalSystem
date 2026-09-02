@@ -1,0 +1,214 @@
+﻿@model CarRentalSystem.ViewModels.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Admin Dashboard - DriveEase
+    </title>
+
+    <link rel="stylesheet"
+          href="~/css/admin.css"
+          asp-append-version="true" />
+
+</head>
+
+
+<body>
+
+
+    <header class="admin-header">
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="brand">
+
+            <span class="brand-icon">
+                🚘
+            </span>
+
+            <div>
+
+                <h2>
+                    Drive<span>Ease</span>
+                </h2>
+
+                <small>
+                    ADMIN PANEL
+                </small>
+
+            </div>
+
+        </a>
+
+
+        <div class="admin-user">
+
+            <div>
+
+                <span>
+                    Administrator
+                </span>
+
+                <strong>
+                    @User.Identity?.Name
+                </strong>
+
+            </div>
+
+
+            <form asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                <button type="submit"
+                        class="logout-button">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </header>
+
+
+
+    <div class="admin-layout">
+
+
+        <aside class="sidebar">
+
+            <a asp-controller="Admin"
+               asp-action="Index"
+               class="active">
+
+                Dashboard
+
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Reservations">
+                Reservations
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Cars">
+
+                Cars
+
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Customers">
+                Customers
+            </a>
+
+        </aside>
+
+
+
+        <main class="dashboard">
+
+
+            <div class="dashboard-heading">
+
+                <span>
+                    OVERVIEW
+                </span>
+
+                <h1>
+                    Admin Dashboard
+                </h1>
+
+                <p>
+                    Monitor cars, reservations and customers.
+                </p>
+
+            </div>
+
+
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <span>
+                        TOTAL CARS
+                    </span>
+
+                    <strong>
+                        @Model.TotalCars
+                    </strong>
+
+                    <small>
+                        @Model.ActiveCars active cars
+                    </small>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <span>
+                        RESERVATIONS
+                    </span>
+
+                    <strong>
+                        @Model.TotalReservations
+                    </strong>
+
+                    <small>
+                        @Model.PendingReservations pending
+                    </small>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <span>
+                        CUSTOMERS
+                    </span>
+
+                    <strong>
+                        @Model.TotalCustomers
+                    </strong>
+
+                    <small>
+                        Registered customers
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+</body>
+
+</html>

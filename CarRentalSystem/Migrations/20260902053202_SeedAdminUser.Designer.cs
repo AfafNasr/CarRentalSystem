@@ -4,6 +4,7 @@ using CarRentalSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalSystem.Migrations
 {
     [DbContext(typeof(CarRentalDbContext))]
-    partial class CarRentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260902053202_SeedAdminUser")]
+    partial class SeedAdminUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,9 +264,6 @@ namespace CarRentalSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -298,7 +298,6 @@ namespace CarRentalSystem.Migrations
                             DriversLicenseNumber = "ADMIN-001",
                             Email = "admin@gmail.com",
                             FirstName = "System",
-                            IsActive = true,
                             LastName = "Admin",
                             PasswordHash = "AQAAAAIAAYagAAAAEO+Hd+1TsOkqhR99zZq3UTpuJFvExJrwKjue7n/0TLN+yxYq2fxaHAAzx+FEQjaqiA==",
                             PhoneNumber = "0000000000",

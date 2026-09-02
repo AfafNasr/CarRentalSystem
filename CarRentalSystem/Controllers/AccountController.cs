@@ -151,9 +151,14 @@ namespace CarRentalSystem.Controllers
                 };
 
             await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
+    CookieAuthenticationDefaults.AuthenticationScheme,
+    new ClaimsPrincipal(claimsIdentity),
+    authProperties);
+
+            if (user.Role == UserRole.Admin)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
 
             return RedirectToAction("Index", "Cars");
         }

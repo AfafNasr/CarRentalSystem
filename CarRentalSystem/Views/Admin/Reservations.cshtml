@@ -1,0 +1,317 @@
+﻿@model List<CarRentalSystem.ViewModels.AdminReservationViewModel>
+
+@{
+    ViewData["Title"] = "Reservations";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Reservations - DriveEase Admin</title>
+
+    <link rel="stylesheet"
+          href="~/css/admin.css"
+          asp-append-version="true" />
+
+</head>
+
+<body>
+
+
+    <header class="admin-header">
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="brand">
+
+            <span class="brand-icon">
+                🚘
+            </span>
+
+            <div>
+
+                <h2>
+                    Drive<span>Ease</span>
+                </h2>
+
+                <small>
+                    ADMIN PANEL
+                </small>
+
+            </div>
+
+        </a>
+
+
+        <div class="admin-user">
+
+            <div>
+
+                <span>
+                    Administrator
+                </span>
+
+                <strong>
+                    @User.Identity?.Name
+                </strong>
+
+            </div>
+
+
+            <form asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                <button type="submit"
+                        class="logout-button">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </header>
+
+
+
+    <div class="admin-layout">
+
+
+        <aside class="sidebar">
+
+            <a asp-controller="Admin"
+               asp-action="Index">
+
+                Dashboard
+
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Reservations"
+               class="active">
+
+                Reservations
+
+            </a>
+
+            <<a asp-controller="Admin"
+                asp-action="Cars">
+
+                Cars
+
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Customers">
+                Customers
+            </a>
+
+        </aside>
+
+
+
+        <main class="dashboard">
+
+
+            <div class="dashboard-heading">
+
+                <span>
+                    MANAGEMENT
+                </span>
+
+                <h1>
+                    Reservations
+                </h1>
+
+                <p>
+                    Review and manage customer reservations.
+                </p>
+
+            </div>
+
+
+            <div class="reservations-card">
+
+
+                @if (!Model.Any())
+                {
+                    <div class="empty-state">
+
+                        No reservations found.
+
+                    </div>
+                }
+
+                else
+                {
+                    <div class="table-wrapper">
+
+                        <table class="admin-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>ID</th>
+
+                                    <th>Customer</th>
+
+                                    <th>Car</th>
+
+                                    <th>Pickup</th>
+
+                                    <th>Return</th>
+
+                                    <th>Total</th>
+
+                                    <th>Status</th>
+
+                                    <th>Actions</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            #@item.ReservationId
+                                        </td>
+
+
+                                        <td>
+
+                                            <strong>
+                                                @item.CustomerName
+                                            </strong>
+
+                                            <small class="table-subtext">
+                                                @item.CustomerEmail
+                                            </small>
+
+                                        </td>
+
+
+                                        <td>
+                                            @item.CarName
+                                        </td>
+
+
+                                        <td>
+                                            @item.PickupDate.ToString("dd MMM yyyy")
+                                        </td>
+
+
+                                        <td>
+                                            @item.ReturnDate.ToString("dd MMM yyyy")
+                                        </td>
+
+
+                                        <td>
+                                            $@item.TotalPrice.ToString("0.00")
+                                        </td>
+
+
+                                        <td>
+
+                                            <span class="status-badge
+                                                status-@item.Status.ToString().ToLower()">
+
+                                                @item.Status
+
+                                            </span>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            @if (item.Status ==
+                                                CarRentalSystem.Models.ReservationStatus.Pending)
+                                            {
+                                                <div class="action-buttons">
+
+
+                                                    <form asp-controller="Admin"
+                                                          asp-action="ApproveReservation"
+                                                          asp-route-id="@item.ReservationId"
+                                                          method="post">
+
+                                                        <button type="submit"
+                                                                class="approve-button">
+
+                                                            Approve
+
+                                                        </button>
+
+                                                    </form>
+
+
+                                                    <form asp-controller="Admin"
+                                                          asp-action="CancelReservation"
+                                                          asp-route-id="@item.ReservationId"
+                                                          method="post">
+
+                                                        <button type="submit"
+                                                                class="cancel-reservation-button">
+
+                                                            Cancel
+
+                                                        </button>
+
+                                                    </form>
+
+
+                                                </div>
+                                            }
+
+                                            else
+                                            {
+                                                <span class="no-action">
+                                                    —
+                                                </span>
+                                            }
+
+                                        </td>
+
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                }
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+</body>
+
+</html>

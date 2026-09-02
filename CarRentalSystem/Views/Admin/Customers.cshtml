@@ -1,0 +1,281 @@
+﻿@model List<CarRentalSystem.ViewModels.AdminCustomerViewModel>
+
+@{
+    ViewData["Title"] = "Customers";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Customers - DriveEase Admin</title>
+
+    <link rel="stylesheet"
+          href="~/css/admin.css"
+          asp-append-version="true" />
+
+</head>
+
+<body>
+
+    <header class="admin-header">
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="brand">
+
+            <span class="brand-icon">🚘</span>
+
+            <div>
+                <h2>Drive<span>Ease</span></h2>
+                <small>ADMIN PANEL</small>
+            </div>
+
+        </a>
+
+        <div class="admin-user">
+
+            <div>
+                <span>Administrator</span>
+                <strong>@User.Identity?.Name</strong>
+            </div>
+
+            <form asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                <button type="submit"
+                        class="logout-button">
+                    Logout
+                </button>
+
+            </form>
+
+        </div>
+
+    </header>
+
+
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+
+            <a asp-controller="Admin"
+               asp-action="Index">
+                Dashboard
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Reservations">
+                Reservations
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Cars">
+                Cars
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Customers"
+               class="active">
+                Customers
+            </a>
+
+        </aside>
+
+
+        <main class="dashboard">
+
+            <div class="dashboard-heading cars-heading">
+
+                <div>
+                    <span>MANAGEMENT</span>
+
+                    <h1>Customers</h1>
+
+                    <p>
+                        Manage customer accounts, reservations and rental activity.
+                    </p>
+                </div>
+
+                <a asp-controller="Admin"
+                   asp-action="CreateCustomer"
+                   class="add-car-button">
+                    + Add Customer
+                </a>
+
+            </div>
+
+
+            @if (TempData["CustomerSuccess"] != null)
+            {
+                <div class="success-alert">
+                    @TempData["CustomerSuccess"]
+                </div>
+            }
+
+
+            <div class="customers-card">
+
+                @if (!Model.Any())
+                {
+                    <div class="empty-state">
+                        No customers found.
+                    </div>
+                }
+                else
+                {
+                    <div class="table-wrapper">
+
+                        <table class="admin-table customer-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Contact</th>
+                                    <th>Location</th>
+                                    <th>License</th>
+                                    <th>Reservations</th>
+                                    <th>Joined</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var customer in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            <div class="customer-name-cell">
+
+                                                <div class="customer-avatar">
+                                                    @customer.FullName.Substring(0, 1).ToUpper()
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        @customer.FullName
+                                                    </strong>
+
+                                                    <span>
+                                                        ID #@customer.Id
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="customer-contact">
+                                                <span>@customer.Email</span>
+                                                <small>@customer.PhoneNumber</small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            @customer.City, @customer.Country
+                                        </td>
+
+                                        <td>
+                                            @customer.DriversLicenseNumber
+                                        </td>
+
+                                        <td>
+                                            <span class="reservation-count">
+                                                @customer.ReservationsCount
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            @customer.CreatedAt.ToString("dd MMM yyyy")
+                                        </td>
+
+                                        <td>
+
+                                            @if (customer.IsActive)
+                                            {
+                                                <span class="customer-status active">
+                                                    Active
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="customer-status disabled">
+                                                    Disabled
+                                                </span>
+                                            }
+
+                                        </td>
+
+                                        <td>
+
+                                            <div class="customer-actions">
+
+                                                <a asp-controller="Admin"
+                                                   asp-action="EditCustomer"
+                                                   asp-route-id="@customer.Id"
+                                                   class="customer-edit-button">
+                                                    Edit
+                                                </a>
+
+                                                <a asp-controller="Admin"
+                                                   asp-action="CreateReservation"
+                                                   asp-route-userId="@customer.Id"
+                                                   class="create-reservation-button">
+                                                    Create Reservation
+                                                </a>
+
+                                                <form asp-controller="Admin"
+                                                      asp-action="ToggleCustomerStatus"
+                                                      asp-route-id="@customer.Id"
+                                                      method="post">
+
+                                                    @if (customer.IsActive)
+                                                    {
+                                                        <button type="submit"
+                                                                class="disable-customer-button">
+                                                            Disable
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button type="submit"
+                                                                class="activate-customer-button">
+                                                            Activate
+                                                        </button>
+                                                    }
+
+                                                </form>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                }
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

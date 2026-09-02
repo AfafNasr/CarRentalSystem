@@ -1,0 +1,329 @@
+﻿@model List<CarRentalSystem.Models.Car>
+
+@{
+    ViewData["Title"] = "Manage Cars";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Manage Cars - DriveEase Admin</title>
+
+    <link rel="stylesheet"
+          href="~/css/admin.css"
+          asp-append-version="true" />
+
+</head>
+
+
+<body>
+
+
+    <header class="admin-header">
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="brand">
+
+            <span class="brand-icon">
+                🚘
+            </span>
+
+            <div>
+
+                <h2>
+                    Drive<span>Ease</span>
+                </h2>
+
+                <small>
+                    ADMIN PANEL
+                </small>
+
+            </div>
+
+        </a>
+
+
+        <div class="admin-user">
+
+            <div>
+
+                <span>
+                    Administrator
+                </span>
+
+                <strong>
+                    @User.Identity?.Name
+                </strong>
+
+            </div>
+
+
+            <form asp-controller="Account"
+                  asp-action="Logout"
+                  method="post">
+
+                <button type="submit"
+                        class="logout-button">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </header>
+
+
+
+    <div class="admin-layout">
+
+
+        <aside class="sidebar">
+
+            <a asp-controller="Admin"
+               asp-action="Index">
+
+                Dashboard
+
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Reservations">
+
+                Reservations
+
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Cars"
+               class="active">
+
+                Cars
+
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Customers">
+                Customers
+            </a>
+
+        </aside>
+
+
+
+        <main class="dashboard">
+
+
+            <div class="dashboard-heading cars-heading">
+
+                <div>
+
+                    <span>
+                        MANAGEMENT
+                    </span>
+
+                    <h1>
+                        Cars
+                    </h1>
+
+                    <p>
+                        Manage the vehicles available in the rental system.
+                    </p>
+
+                </div>
+
+
+                <a asp-controller="Admin"
+                   asp-action="CreateCar"
+                   class="add-car-button">
+
+                    + Add New Car
+
+                </a>
+
+            </div>
+
+
+
+            <div class="reservations-card">
+
+
+                @if (!Model.Any())
+                {
+                    <div class="empty-state">
+                        No cars found.
+                    </div>
+                }
+
+                else
+                {
+                    <div class="table-wrapper">
+
+                        <table class="admin-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>ID</th>
+
+                                    <th>Car</th>
+
+                                    <th>Type</th>
+
+                                    <th>Transmission</th>
+
+                                    <th>Location</th>
+
+                                    <th>Daily Rate</th>
+
+                                    <th>Status</th>
+
+                                    <th>Actions</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                @foreach (var car in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            #@car.Id
+                                        </td>
+
+
+                                        <td>
+
+                                            <strong>
+                                                @car.Brand @car.Model
+                                            </strong>
+
+                                            <small class="table-subtext">
+                                                @car.Year • @car.Color
+                                            </small>
+
+                                        </td>
+
+
+                                        <td>
+                                            @car.Type
+                                        </td>
+
+
+                                        <td>
+                                            @car.Transmission
+                                        </td>
+
+
+                                        <td>
+                                            @car.Location
+                                        </td>
+
+
+                                        <td>
+                                            $@car.DailyRate.ToString("0.00")
+                                        </td>
+
+
+                                        <td>
+
+                                            @if (car.IsActive)
+                                            {
+                                                <span class="status-badge status-confirmed">
+                                                    Active
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="status-badge status-cancelled">
+                                                    Disabled
+                                                </span>
+                                            }
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <div class="action-buttons">
+
+                                                <a asp-controller="Admin"
+                                                   asp-action="EditCar"
+                                                   asp-route-id="@car.Id"
+                                                   class="edit-button">
+
+                                                    Edit
+
+                                                </a>
+
+
+                                                <form asp-controller="Admin"
+                                                      asp-action="ToggleCarStatus"
+                                                      asp-route-id="@car.Id"
+                                                      method="post">
+
+                                                    @if (car.IsActive)
+                                                    {
+                                                        <button type="submit"
+                                                                class="cancel-reservation-button">
+
+                                                            Disable
+
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button type="submit"
+                                                                class="approve-button">
+
+                                                            Activate
+
+                                                        </button>
+                                                    }
+
+                                                </form>
+
+                                            </div>
+
+                                        </td>
+
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                }
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+</body>
+
+</html>

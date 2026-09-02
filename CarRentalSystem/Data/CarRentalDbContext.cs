@@ -24,6 +24,45 @@ namespace CarRentalSystem.Data
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
+            modelBuilder.Entity<User>().HasData(
+    new User
+    {
+        Id = 1000,
+
+        FirstName = "System",
+        LastName = "Admin",
+
+        Email = "admin@gmail.com",
+
+        PasswordHash = "AQAAAAIAAYagAAAAEO+Hd+1TsOkqhR99zZq3UTpuJFvExJrwKjue7n/0TLN+yxYq2fxaHAAzx+FEQjaqiA==",
+
+        PhoneNumber = "0000000000",
+
+        DateOfBirth = new DateTime(1990, 1, 1),
+
+        AddressLine1 = "DriveEase Headquarters",
+
+        AddressLine2 = null,
+
+        City = "Nablus",
+
+        Country = "Palestine",
+
+        DriversLicenseNumber = "ADMIN-001",
+
+        Role = UserRole.Admin,
+
+        CreatedAt = new DateTime(
+            2026,
+            1,
+            1,
+            0,
+            0,
+            0,
+            DateTimeKind.Utc)
+    }
+);
+
             modelBuilder.Entity<Car>()
                 .HasData(
                     new Car
